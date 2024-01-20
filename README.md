@@ -139,7 +139,12 @@ python manage.py sqlmigrate <app_name> <migration_name>
 
 ## CRUD
 
-See basic CRUD operations in [view](my_app1/views.py) file.
+- Design models as per the [models](my_app1/views.py) and run the [migrations](#run-the-migrations).
+- Run the [management commands](my_app1/management/commands/insert_dummy_data.py) to insert data.
+    ```s
+    python manage.py insert_dummy_data
+    ```
+- See basic operations from [view](my_app1/views.py) file.
 
 
 ## Shell
