@@ -1,16 +1,8 @@
-from django.urls import path, include
-from django.shortcuts import redirect, reverse
-from .views import GetView, put_view, post_view, delete_view
+from django.urls import path
+from .views import GetView
 
-curd_patterns = [
-    path('', lambda request: redirect(reverse('my_app1:get')), name='redirect_home_to_get'),
-    path("get/", GetView.as_view(), name="get"),
-    path("put/<int:pk>/<str:color>/", put_view, name="put"),
-    path("post/<str:color>/<int:m_id1>/<int:m_id2>/<int:m_id3>/", post_view, name="post"),
-    path("delete/<int:pk>/", delete_view, name="delete")
-]
 
 app_name = "my_app1"
 urlpatterns = [
-    path("crud/", include(curd_patterns), name="crud")
+    path("crud/", GetView.as_view(), name="crud")
 ]

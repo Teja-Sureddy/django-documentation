@@ -1,9 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import redirect
 from django_tables2 import SingleTableView, RequestConfig
 from django_filters.views import FilterView
 from .models import MyModel4
 from .tables import MyModel4Table
 from .filters import MyModel4Filter
+from .forms import MyModel4Form
 
 
 # Create your views here.
@@ -14,7 +15,11 @@ class GetView(SingleTableView, FilterView):
     filterset_class = MyModel4Filter
     table_pagination = {'per_page': 50}
 
-    def get_table_data(self):
+    def __init__(self, *args, **kwargs):
+        self.object_list = kwargs.pop('queryset', None)
+        super().__init__(*args, **kwargs)
+
+    def get_queryset(self):
         return MyModel4.objects.filter(
             my_model1__name__startswith="Person",
             my_model1__created_at__year=2024,
@@ -23,22 +28,27 @@ class GetView(SingleTableView, FilterView):
             hair_color__isnull=False
         ).order_by("id")
 
+    def get_table_data(self):
+        return self.get_queryset()
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['filter'] = self.filterset_class(self.request.GET, queryset=self.get_table_data())
         table = MyModel4Table(context['filter'].qs)
         RequestConfig(self.request, paginate=self.table_pagination).configure(table)
         context['table'] = table
+        # additional data
+        context['title'] = 'CRUD'
+        context['form'] = MyModel4Form()
         return context
 
+    def post(self, request):
+        form = MyModel4Form(request.POST)
 
-def put_view(request, pk: int, color: str):
-    pass
+        if form.is_valid():
+            form.save()
+            return redirect(request.path)
 
-
-def post_view(request, color: str, m_id1: int, m_id2: int, m_id3: int):
-    pass
-
-
-def delete_view(request, pk: int):
-    pass
+        context = self.get_context_data()
+        context['form'] = form
+        return self.render_to_response(context)
