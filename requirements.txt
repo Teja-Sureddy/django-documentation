@@ -2,3 +2,5 @@ Django==4.2
 psycopg2==2.9.9  # For postgres
 django-debug-toolbar==4.2  # For debugging
 Pillow==10.2.0  # For ImageField
+django-tables2==2.7.0
+django-filter==23.5

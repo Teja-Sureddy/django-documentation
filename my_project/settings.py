@@ -39,7 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'my_app1.apps.MyApp1Config',
     'my_app2.apps.MyApp2Config',
-    'debug_toolbar'
+    'debug_toolbar',
+    'django_tables2',
+    'django_filters'
 ]
 
 MIDDLEWARE = [

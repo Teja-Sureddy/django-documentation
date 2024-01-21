@@ -33,15 +33,15 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         # Insert dummy data into MyModel1
-        for _ in range(10):
-            rand = random.randint(1, 100)
+        for _ in range(1000):
+            rand = random.randint(1000, 9999)
             existing_instance = MyModel1.objects.filter(email=f'person_{rand}@example.com').first()
 
             if existing_instance is None:
                 MyModel1.objects.create(
                     name=f'Person {rand}',
                     email=f'person_{rand}@example.com',
-                    age=random.randint(18, 50),
+                    age=random.randint(10, 60),
                     dob=timezone.now().date(),
                     tob=timezone.now().time(),
                     gender=random.choice(['M', 'F']),
@@ -52,13 +52,13 @@ class Command(BaseCommand):
 
         # Insert dummy data into MyModel2
         favorite_colors = ['Red', 'Blue', 'Green', 'Yellow', 'Purple']
-        for _ in range(5):
+        for _ in range(20):
             favorite_color = random.choice(favorite_colors)
             MyModel2.objects.create(favorite_color=favorite_color)
         print('MyModel2 Done.')
 
         # Insert dummy data into MyModel3
-        for _ in range(7):
+        for _ in range(200):
             MyModel3.objects.create(
                 is_hair_styled=random.choice([True, False]),
                 hair_length_cm=random.randint(20, 50),
@@ -73,7 +73,7 @@ class Command(BaseCommand):
         my_model2_instances = MyModel2.objects.all()
         my_model3_instances = MyModel3.objects.all()
 
-        for _ in range(10):
+        for _ in range(1000):
             my_model1_instance = random.choice(my_model1_instances)
             existing_instance = MyModel4.objects.filter(my_model1=my_model1_instance).first()
             data = {
