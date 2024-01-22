@@ -1,10 +1,12 @@
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from django_tables2 import SingleTableView, RequestConfig
 from django_filters.views import FilterView
 from .models import MyModel4
 from .tables import MyModel4Table
 from .filters import MyModel4Filter
 from .forms import MyModel4Form
+from django.contrib import messages
+from django.http import JsonResponse
 
 
 # Create your views here.
@@ -47,8 +49,20 @@ class GetView(SingleTableView, FilterView):
 
         if form.is_valid():
             form.save()
+            messages.success(request, "Posted.")
             return redirect(request.path)
 
         context = self.get_context_data()
         context['form'] = form
         return self.render_to_response(context)
+
+    @staticmethod
+    def delete(request, pk):
+        if request.method == 'DELETE':
+            instance = get_object_or_404(MyModel4, pk=pk)
+            my_model1 = instance.my_model1
+            instance.delete()
+            my_model1.delete()
+            messages.success(request, "Deleted.")
+            return JsonResponse({'success': True}, status=200)
+        return JsonResponse({'success': False, 'error': 'Invalid request method'}, status=400)

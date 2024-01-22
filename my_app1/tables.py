@@ -52,7 +52,7 @@ class MyModel4Table(tables.Table):
 
     actions = tables.TemplateColumn(
         template_code='''<a href="#" class="text-primary me-1 py-1">Edit</a>
-                         <a href="#" class="text-danger ms-1 py-1">Delete</a>''',
+                         <a href="#" data-bs-toggle="modal" data-bs-target="#deleteModel" data-pk="{{ record.id }}" class="text-danger ms-1 py-1">Delete</a>''',
         verbose_name='Actions',
         orderable=False
     )
