@@ -1,20 +1,18 @@
 from django.shortcuts import redirect, get_object_or_404
 from django_tables2 import SingleTableView, RequestConfig
 from django_filters.views import FilterView
-from .models import MyModel4
-from .tables import MyModel4Table
-from .filters import MyModel4Filter
-from .forms import MyModel4Form
+from dashboard.models import ProfileModel, ColorModel, HairModel, FullProfileModel
+from dashboard.utils import FullProfileTable, FullProfileFilter
+from dashboard.forms import FullProfileForm
 from django.contrib import messages
 from django.http import JsonResponse
 
 
-# Create your views here.
-class GetView(SingleTableView, FilterView):
-    model = MyModel4
-    table_class = MyModel4Table
-    template_name = 'crud.html'
-    filterset_class = MyModel4Filter
+class ProfileView(SingleTableView, FilterView):
+    model = FullProfileModel
+    table_class = FullProfileTable
+    template_name = 'profile.html'
+    filterset_class = FullProfileFilter
     table_pagination = {'per_page': 50}
 
     def __init__(self, *args, **kwargs):
@@ -22,11 +20,11 @@ class GetView(SingleTableView, FilterView):
         super().__init__(*args, **kwargs)
 
     def get_queryset(self):
-        return MyModel4.objects.filter(
-            my_model1__name__startswith="Person",
-            my_model1__created_at__year=2024,
-            my_model1__age__gt=18,
-            my_model3__hair_description__contains="description",
+        return FullProfileModel.objects.filter(
+            profile__name__startswith="Person",
+            profile__created_at__year=2024,
+            profile__age__gt=18,
+            hair__hair_description__contains="description",
             hair_color__isnull=False
         ).order_by("id")
 
@@ -36,16 +34,16 @@ class GetView(SingleTableView, FilterView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['filter'] = self.filterset_class(self.request.GET, queryset=self.get_table_data())
-        table = MyModel4Table(context['filter'].qs)
+        table = FullProfileTable(context['filter'].qs)
         RequestConfig(self.request, paginate=self.table_pagination).configure(table)
         context['table'] = table
         # additional data
-        context['title'] = 'CRUD'
-        context['form'] = MyModel4Form()
+        context['title'] = 'Profile'
+        context['form'] = FullProfileForm()
         return context
 
     def post(self, request):
-        form = MyModel4Form(request.POST)
+        form = FullProfileForm(request.POST)
 
         if form.is_valid():
             form.save()
@@ -59,10 +57,10 @@ class GetView(SingleTableView, FilterView):
     @staticmethod
     def delete(request, pk):
         if request.method == 'DELETE':
-            instance = get_object_or_404(MyModel4, pk=pk)
-            my_model1 = instance.my_model1
+            instance = get_object_or_404(FullProfileModel, pk=pk)
+            profile = instance.profile
             instance.delete()
-            my_model1.delete()
+            profile.delete()
             messages.success(request, "Deleted.")
             return JsonResponse({'success': True}, status=200)
         return JsonResponse({'success': False, 'error': 'Invalid request method'}, status=400)

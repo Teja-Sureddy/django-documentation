@@ -1,8 +1,10 @@
+//Clear all Filters
 function clearAll() {
     var url = window.location.href.split('?')[0];
     window.location.href = url;
 }
 
+//Delete
 $('#deleteModel').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget);
     var pk = button.data('pk');
@@ -14,7 +16,7 @@ $('#deleteModel').on('show.bs.modal', function (event) {
 
 function deleteItem(pk, csrfToken) {
     $.ajax({
-        url: '/crud/' + pk + '/',
+        url: '/profile/' + pk + '/',
         type: 'DELETE',
         headers: {'X-CSRFToken': csrfToken},
         success: function (response) {
@@ -26,6 +28,7 @@ function deleteItem(pk, csrfToken) {
     });
 }
 
+//Message
 function hideMessages() {
     var messages = $('.messages');
     var messagesClose = $('#messages-close');

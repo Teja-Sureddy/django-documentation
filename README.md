@@ -1,11 +1,11 @@
 # Django Documentation
 
-|                  |                     |
-|------------------|---------------------|
-| **OS**           | Windows             |
-| **DB Name**      | my_db               |
-| **Project Name** | my_project          |
-| **App Names**    | `my_app1` `my_app2` |
+|                  |             |
+|------------------|-------------|
+| **OS**           | Windows     |
+| **DB Name**      | my_db       |
+| **Project Name** | my_project  |
+| **App Names**    | `dashboard` |
 
 
 ## Table of Contents
@@ -63,14 +63,13 @@ python manage.py runserver 8000
 ## Create an app
 
 There is no limitation of creating number of apps in django.<br>
-Create an app names called `my_app1` & `my_app2`:
+Create an app name called `dashboard`:
 
 ```sh
-python manage.py startapp my_app1
-python manage.py startapp my_app2
+python manage.py startapp dashboard
 ```
 
-Add `'my_app1.apps.MyApp1Config', 'my_app1.apps.MyApp2Config'` to the `INSTALLED_APPS` in [settings](my_project/settings.py) file and run the [migrations](#run-the-migrations).
+Add `'dashboard.apps.DashboardConfig'` to the `INSTALLED_APPS` in [settings](my_project/settings.py) file and run the [migrations](#run-the-migrations).
 
 ## Configure python interpreter
 
@@ -114,7 +113,7 @@ python manage.py makemigrations
 python manage.py migrate
 ```
 
-To unapply migrations:
+To un apply migrations:
 
 ```
 python manage.py showmigrations
@@ -139,12 +138,12 @@ python manage.py sqlmigrate <app_name> <migration_name>
 
 ## CRUD
 
-- Design models as per the [models](my_app1/views.py) and run the [migrations](#run-the-migrations).
-- Run the [management commands](my_app1/management/commands/insert_dummy_data.py) to insert data.
+- Design models as per the [models](dashboard/views/profile.py) and run the [migrations](#run-the-migrations).
+- Run the [management commands](dashboard/management/commands/insert_dummy_data.py) to insert data.
     ```s
     python manage.py insert_dummy_data
     ```
-- See basic operations from [view](my_app1/views.py) file.
+- See basic operations from [view](dashboard/views/profile.py) file.
 
 
 ## Shell
@@ -162,7 +161,7 @@ Create a user who can login to the admin site:
 python manage.py createsuperuser
 ```
 
-Register the models for the my_app1 app in [admin](my_app1/admin.py) file to do the CURD operations from the admin panel.
+Register the models for the dashboard app in [admin](dashboard/admin.py) file to do the CURD operations from the admin panel.
 
 ## Debugger
 

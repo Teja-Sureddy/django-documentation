@@ -37,8 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'my_app1.apps.MyApp1Config',
-    'my_app2.apps.MyApp2Config',
+    'dashboard.apps.DashboardConfig',
     'debug_toolbar',
     'django_tables2',
     'django_filters'

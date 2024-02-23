@@ -1,7 +1,7 @@
 import random
 from django.core.management.base import BaseCommand
 from django.utils import timezone
-from my_app1.models import MyModel1, MyModel2, MyModel3, MyModel4
+from dashboard.models import ProfileModel, ColorModel, HairModel, FullProfileModel
 import string
 import ipaddress
 from datetime import timedelta
@@ -29,16 +29,16 @@ def generate_random_duration():
 
 
 class Command(BaseCommand):
-    help = 'Inserts dummy data into MyModel1, MyModel2, MyModel3, and MyModel4'
+    help = 'Inserts dummy data into ProfileModel, ColorModel, HairModel, and FullProfileModel'
 
     def handle(self, *args, **options):
-        # Insert dummy data into MyModel1
+        # Insert dummy data into ProfileModel
         for _ in range(1000):
             rand = random.randint(1000, 9999)
-            existing_instance = MyModel1.objects.filter(email=f'person_{rand}@example.com').first()
+            existing_instance = ProfileModel.objects.filter(email=f'person_{rand}@example.com').first()
 
             if existing_instance is None:
-                MyModel1.objects.create(
+                ProfileModel.objects.create(
                     name=f'Person {rand}',
                     email=f'person_{rand}@example.com',
                     age=random.randint(10, 60),
@@ -48,34 +48,34 @@ class Command(BaseCommand):
                     ip_address=generate_random_ip(),
                     website=generate_random_website()
                 )
-        print('MyModel1 Done.')
+        print('ProfileModel Done.')
 
-        # Insert dummy data into MyModel2
+        # Insert dummy data into ColorModel
         favorite_colors = ['Red', 'Blue', 'Green', 'Yellow', 'Purple']
         for _ in range(20):
             favorite_color = random.choice(favorite_colors)
-            MyModel2.objects.create(favorite_color=favorite_color)
-        print('MyModel2 Done.')
+            ColorModel.objects.create(favorite_color=favorite_color)
+        print('ColorModel Done.')
 
-        # Insert dummy data into MyModel3
+        # Insert dummy data into HairModel
         for _ in range(200):
-            MyModel3.objects.create(
+            HairModel.objects.create(
                 is_hair_styled=random.choice([True, False]),
                 hair_length_cm=random.randint(20, 50),
                 hair_color_intensity=random.uniform(0.1, 3.0),
                 hair_shine_factor=random.uniform(0.1, 1.0),
                 hair_description=f'Dummy description {_}'
             )
-        print('MyModel3 Done.')
+        print('HairModel Done.')
 
-        # Insert dummy data into MyModel4
-        my_model1_instances = MyModel1.objects.all()
-        my_model2_instances = MyModel2.objects.all()
-        my_model3_instances = MyModel3.objects.all()
+        # Insert dummy data into FullProfileModel
+        profile_instances = ProfileModel.objects.all()
+        color_instances = ColorModel.objects.all()
+        hair_instances = HairModel.objects.all()
 
         for _ in range(1000):
-            my_model1_instance = random.choice(my_model1_instances)
-            existing_instance = MyModel4.objects.filter(my_model1=my_model1_instance).first()
+            profile_instance = random.choice(profile_instances)
+            existing_instance = FullProfileModel.objects.filter(profile=profile_instance).first()
             data = {
                 "name": ''.join(random.choice(string.ascii_letters) for _ in range(10)),
                 "age": random.randint(18, 60),
@@ -84,13 +84,13 @@ class Command(BaseCommand):
             }
 
             if existing_instance is None:
-                MyModel4.objects.create(
+                FullProfileModel.objects.create(
                     hair_color=random.choice(['BL', 'BR', 'BK', 'RD', 'OT']),
                     duration=str(generate_random_duration()),
                     json_data=data,
-                    my_model1=my_model1_instance,
-                    my_model3=random.choice(my_model3_instances)
-                ).my_model2.set(random.sample(list(my_model2_instances), random.randint(1, 3)))
-        print('MyModel4 Done.')
+                    profile=profile_instance,
+                    hair=random.choice(hair_instances)
+                ).color.set(random.sample(list(color_instances), random.randint(1, 3)))
+        print('FullProfileModel Done.')
 
         self.stdout.write(self.style.SUCCESS('Successfully inserted dummy data.'))
