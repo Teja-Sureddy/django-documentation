@@ -16,7 +16,7 @@ $('#deleteModel').on('show.bs.modal', function (event) {
 
 function deleteItem(pk, csrfToken) {
     $.ajax({
-        url: '/profile/' + pk + '/',
+        url: 'delete/' + pk + '/',
         type: 'DELETE',
         headers: {'X-CSRFToken': csrfToken},
         success: function (response) {

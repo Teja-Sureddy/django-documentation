@@ -5,17 +5,18 @@ from dashboard.models import ProfileModel, FullProfileModel
 class FullProfileForm(forms.ModelForm):
     class Meta:
         model = FullProfileModel
-        fields = ['hair_color', 'duration', 'json_data', 'color', 'hair']
+        fields = ['name', 'email', 'age', 'gender', 'dob', 'tob', 'slug', 'website', 'ip_address',
+                  'hair', 'hair_color', 'color', 'duration', 'json_data']
 
-    name = forms.CharField(max_length=100, initial='Person')
-    email = forms.EmailField(initial='Persontest@gmail.com')
-    age = forms.IntegerField(initial=22)
-    dob = forms.DateField(initial='2024-12-12')
-    tob = forms.TimeField(initial='23:30')
-    gender = forms.ChoiceField(choices=ProfileModel.GENDERS)
-    ip_address = forms.GenericIPAddressField(initial='59.192.223.180')
-    slug = forms.SlugField(initial='testslug')
-    website = forms.URLField(initial='http://test.com')
+    name = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'Enter your Name'}))
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder': 'Enter your Email'}))
+    age = forms.IntegerField(widget=forms.NumberInput(attrs={'placeholder': 'Enter your Age'}))
+    gender = forms.ChoiceField(choices=[('', 'Select gender'), ] + ProfileModel.GENDERS)
+    dob = forms.DateField(label='Date of birth', widget=forms.DateInput(attrs={'placeholder': 'YYYY-MM-DD'}))
+    tob = forms.TimeField(label='Time of birth', widget=forms.TimeInput(attrs={'placeholder': 'HH:MM'}))
+    slug = forms.SlugField(widget=forms.TextInput(attrs={'placeholder': 'Enter slug'}))
+    website = forms.URLField(initial='https://', widget=forms.URLInput(attrs={'placeholder': 'Enter website URL'}))
+    ip_address = forms.GenericIPAddressField(widget=forms.TextInput(attrs={'placeholder': 'Enter IP address'}))
 
     def save(self, commit=True):
         profile_data = {
@@ -35,3 +36,25 @@ class FullProfileForm(forms.ModelForm):
         full_profile = super().save(commit=commit)
         full_profile.color.set(self.cleaned_data['color'])
         return full_profile
+
+    def as_div(self):
+        html = ''
+        for field in self:
+            html += f"""
+                <div class='mb-3 d-flex flex-column justify-content-start'>
+                    <label class='form-label mb-2 fs-9' for="{field.id_for_label}">
+                    {field.label}
+                    <span class='text-danger'>{'*' if field.field.required and field.label else ''}</span>
+                    </label>
+                    <div class='profile-form'>{field.as_widget()}</div>
+                    <div class='text-danger fs-9 mt-1'>{field.errors}</div>
+                </div>
+            """
+        return html
+
+    def __init__(self, *args, **kwargs):
+        super(FullProfileForm, self).__init__(*args, **kwargs)
+        self.fields['hair'].empty_label = 'Select hair'
+        self.fields['hair_color'].choices = [('', 'Select hair color')] + FullProfileModel.HairColor.choices
+        self.fields['duration'].widget.attrs['placeholder'] = 'Enter duration'
+        self.fields['json_data'].widget.attrs['placeholder'] = 'Enter JSON'

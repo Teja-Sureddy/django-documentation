@@ -1,0 +1,25 @@
+{% extends "index.html" %}
+
+{% load render_table from django_tables2 %}
+
+{% block title %}{{title}} - My Project{% endblock title %}
+
+{% block content %}
+<div class="card">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="d-flex align-items-center">
+            <h2 class="text-uppercase m-0 title">{{title}}</h2>
+        </div>
+    </div>
+    <div class="profile-table form-table">
+    <form method="post" action="{% url 'dashboard:profile-add' %}">
+        {% csrf_token %}
+        {{ form.as_div|safe }}  <!--use as_p if not using as_div-->
+        <div class="form-submit d-flex justify-content-end align-items-center">
+            <a href="{% url 'dashboard:profile' %}"><button type="button" class="btn btn-secondary me-1">Back</button></a>
+            <button type="submit" class="btn btn-primary ms-1">Add</button>
+        </div>
+    </form>
+    </div>
+</div>
+{% endblock content %}

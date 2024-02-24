@@ -1,9 +1,8 @@
-from django.shortcuts import redirect, get_object_or_404
+from django.shortcuts import get_object_or_404
 from django_tables2 import SingleTableView, RequestConfig
 from django_filters.views import FilterView
-from dashboard.models import ProfileModel, ColorModel, HairModel, FullProfileModel
+from dashboard.models import FullProfileModel
 from dashboard.utils import FullProfileTable, FullProfileFilter
-from dashboard.forms import FullProfileForm
 from django.contrib import messages
 from django.http import JsonResponse
 
@@ -37,22 +36,8 @@ class ProfileView(SingleTableView, FilterView):
         table = FullProfileTable(context['filter'].qs)
         RequestConfig(self.request, paginate=self.table_pagination).configure(table)
         context['table'] = table
-        # additional data
         context['title'] = 'Profile'
-        context['form'] = FullProfileForm()
         return context
-
-    def post(self, request):
-        form = FullProfileForm(request.POST)
-
-        if form.is_valid():
-            form.save()
-            messages.success(request, "Posted.")
-            return redirect(request.path)
-
-        context = self.get_context_data()
-        context['form'] = form
-        return self.render_to_response(context)
 
     @staticmethod
     def delete(request, pk):

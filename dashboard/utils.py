@@ -4,6 +4,7 @@ from dashboard.models import FullProfileModel
 from django.utils.html import format_html, escape
 from django.utils.safestring import mark_safe
 from datetime import datetime
+from django import forms
 
 
 # Table
@@ -128,41 +129,58 @@ class FullProfileTable(tables.Table):
 
 
 # Filter
-class FullProfileFilter(django_filters.FilterSet):
-    hair_color = django_filters.ChoiceFilter(
-        field_name='hair_color',
-        choices=FullProfileModel.HairColor.choices,
-        null_label='Any',
-        label='Hair Color',
-    )
+class CustomRangeWidget(django_filters.widgets.RangeWidget):
+    def __init__(self, attrs=None):
+        super().__init__(attrs)
+        self.widgets[0].attrs.update({'placeholder': attrs.get('ph1'), 'class': 'me-2'})
+        self.widgets[1].attrs.update({'placeholder': attrs.get('ph2'), 'class': 'ms-2'})
 
-    hair__hair_length_cm__range = django_filters.RangeFilter(
-        field_name='hair__hair_length_cm',
-        label='Hair Length (Range)',
-    )
+    def render(self, name, value, attrs=None, renderer=None):
+        html = '<div class="range-inputs">'
+        html += super().render(name, value, attrs, renderer)
+        html += '</div>'
+        return html
+
+
+class FullProfileFilter(django_filters.FilterSet):
+    class Meta:
+        model = FullProfileModel
+        fields = {
+            'profile__name': ['icontains'],
+            'profile__age': ['range'],
+            'profile__dob': ['range'],
+            'hair_color': ['exact'],
+            'hair__hair_length_cm': ['range'],
+        }
 
     profile__name__icontains = django_filters.CharFilter(
         field_name='profile__name',
         lookup_expr='icontains',
-        label='Name (Contains)',
+        label='Enter name',
+        widget=forms.TextInput(attrs={'placeholder': 'Name'}),
     )
 
     profile__age__range = django_filters.RangeFilter(
         field_name='profile__age',
-        label='Age (Range)',
+        label='Age',
+        widget=CustomRangeWidget({'ph1': 'Min age', 'ph2': 'Max age'})
     )
 
     profile__dob__range = django_filters.DateFromToRangeFilter(
         field_name='profile__dob',
-        label='DOB (Date Range)',
+        label='Date of birth',
+        widget=CustomRangeWidget({'ph1': 'Min YYYY-MM-DD', 'ph2': 'Max YYYY-MM-DD'})
     )
 
-    class Meta:
-        model = FullProfileModel
-        fields = {
-            'hair_color': ['exact'],
-            'hair__hair_length_cm': ['range'],
-            'profile__name': ['icontains'],
-            'profile__age': ['range'],
-            'profile__dob': ['range'],
-        }
+    hair_color = django_filters.ChoiceFilter(
+        field_name='hair_color',
+        choices=FullProfileModel.HairColor.choices,
+        label='Hair Color',
+        empty_label='Select hair color'
+    )
+
+    hair__hair_length_cm__range = django_filters.RangeFilter(
+        field_name='hair__hair_length_cm',
+        label='Hair Length',
+        widget=CustomRangeWidget({'ph1': 'Min length', 'ph2': 'Max length'})
+    )
