@@ -14,18 +14,11 @@
                 </button>
             </div>
             <div>
-                <a href="{% url 'dashboard:profile-add' %}"><button class="btn btn-primary">Add</button></a>
+                <a href="{% url 'dashboard:profile-add' %}" class="btn btn-primary text-white text-decoration-none">Add</a>
             </div>
         </div>
 
-        {% if messages %}
-        <div class="messages messages d-flex justify-content-between align-items-center">
-            {% for message in messages %}
-            <div>{{message}}</div>
-            {% endfor %}
-            <button type="button" class="btn-close fs-8" id="messages-close" aria-label="Close"></button>
-        </div>
-        {% endif %}
+        {% include "components/messages.html" with messages=messages %}
 
         <div class="profile-table">
             {% render_table table %}

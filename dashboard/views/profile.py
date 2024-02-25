@@ -18,14 +18,15 @@ class ProfileView(SingleTableView, FilterView):
         self.object_list = kwargs.pop('queryset', None)
         super().__init__(*args, **kwargs)
 
-    def get_queryset(self):
-        return FullProfileModel.objects.filter(
-            profile__name__startswith="Person",
-            profile__created_at__year=2024,
-            profile__age__gt=18,
-            hair__hair_description__contains="description",
-            hair_color__isnull=False
-        ).order_by("id")
+    # # Custom filtering
+    # def get_queryset(self):
+    #     return FullProfileModel.objects.filter(
+    #         profile__name__startswith="Person",
+    #         profile__created_at__year=2024,
+    #         profile__age__gt=18,
+    #         hair__hair_description__contains="description",
+    #         hair_color__isnull=False
+    #     ).order_by("id")
 
     def get_table_data(self):
         return self.get_queryset()

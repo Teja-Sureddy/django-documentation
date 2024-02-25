@@ -18,6 +18,14 @@ class FullProfileForm(forms.ModelForm):
     website = forms.URLField(initial='https://', widget=forms.URLInput(attrs={'placeholder': 'Enter website URL'}))
     ip_address = forms.GenericIPAddressField(widget=forms.TextInput(attrs={'placeholder': 'Enter IP address'}))
 
+    def __init__(self, *args, pk=None, **kwargs):
+        self.pk = pk
+        super(FullProfileForm, self).__init__(*args, **kwargs)
+        self.fields['hair'].empty_label = 'Select hair'
+        self.fields['hair_color'].choices = [('', 'Select hair color')] + FullProfileModel.HairColor.choices
+        self.fields['duration'].widget.attrs['placeholder'] = 'Enter duration'
+        self.fields['json_data'].widget.attrs['placeholder'] = 'Enter JSON'
+
     def save(self, commit=True):
         profile_data = {
             'name': self.cleaned_data['name'],
@@ -30,8 +38,16 @@ class FullProfileForm(forms.ModelForm):
             'slug': self.cleaned_data['slug'],
             'website': self.cleaned_data['website'],
         }
-        profile = ProfileModel.objects.create(**profile_data)
-        self.cleaned_data['profile'] = profile
+
+        if self.pk is not None:
+            full_profile = FullProfileModel.objects.get(pk=self.pk)
+            profile = full_profile.profile
+            profile.__dict__.update(**profile_data)
+            profile.save()
+        else:
+            profile = ProfileModel.objects.create(**profile_data)
+
+        self.instance.pk = self.pk
         self.instance.profile = profile
         full_profile = super().save(commit=commit)
         full_profile.color.set(self.cleaned_data['color'])
@@ -41,7 +57,7 @@ class FullProfileForm(forms.ModelForm):
         html = ''
         for field in self:
             html += f"""
-                <div class='mb-3 d-flex flex-column justify-content-start'>
+                <div class='mb-3 d-flex flex-column justify-content-start col-12 col-sm-6 col-lg-4'>
                     <label class='form-label mb-2 fs-9' for="{field.id_for_label}">
                     {field.label}
                     <span class='text-danger'>{'*' if field.field.required and field.label else ''}</span>
@@ -51,10 +67,3 @@ class FullProfileForm(forms.ModelForm):
                 </div>
             """
         return html
-
-    def __init__(self, *args, **kwargs):
-        super(FullProfileForm, self).__init__(*args, **kwargs)
-        self.fields['hair'].empty_label = 'Select hair'
-        self.fields['hair_color'].choices = [('', 'Select hair color')] + FullProfileModel.HairColor.choices
-        self.fields['duration'].widget.attrs['placeholder'] = 'Enter duration'
-        self.fields['json_data'].widget.attrs['placeholder'] = 'Enter JSON'
