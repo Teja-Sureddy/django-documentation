@@ -1,6 +1,8 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from phonenumber_field.modelfields import PhoneNumberField
+from django.contrib.auth.hashers import make_password
 
 
 class UserManager(BaseUserManager):
@@ -30,14 +32,14 @@ class UserManager(BaseUserManager):
         if extra_fields.get('is_superuser') is not True:
             raise ValueError('Superuser must have is_superuser=True.')
 
-        return self._create_user(email, phone, name, password, **extra_fields)
+        return self.create_user(email, phone, name, password, **extra_fields)
 
 
 class User(AbstractBaseUser, PermissionsMixin):
     username = None
 
     email = models.EmailField(_('Email'), unique=True)
-    phone = models.IntegerField(_('Phone'), max_length=15, unique=True)
+    phone = PhoneNumberField(_('Phone'), unique=True)
     name = models.CharField(_('Name'), max_length=150)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
@@ -50,3 +52,10 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return f"{self.email} | {self.phone}"
+
+    def save(self, *args, **kwargs):
+        if not self.pk or not self.password.startswith('pbkdf2_'):
+            self.set_password(self.password)
+        elif self.password.startswith('pbkdf2_'):
+            del self.password
+        super().save(*args, **kwargs)

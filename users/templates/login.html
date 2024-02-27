@@ -1,0 +1,11 @@
+{% extends "index.html" %}
+
+{% block title %}{{title}} - My Project{% endblock title %}
+
+{% block content %}
+<form method="post" class="row">
+    {% csrf_token %}
+    {{ form.as_p }}  <!--use as_p if not using as_div-->
+    <button type="button" hx-post="/" hx-trigger="click" hx-target="#body">Login</button>
+</form>
+{% endblock content %}
