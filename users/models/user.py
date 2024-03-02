@@ -2,11 +2,10 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, Permis
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from phonenumber_field.modelfields import PhoneNumberField
-from django.contrib.auth.hashers import make_password
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, email, phone, name, password=None, **extra_fields):
+    def create_user(self, email, phone, name, password, **extra_fields):
         extra_fields.setdefault('is_staff', False)
         extra_fields.setdefault('is_superuser', False)
         extra_fields.setdefault('is_active', True)
@@ -17,12 +16,11 @@ class UserManager(BaseUserManager):
             raise ValueError(_('The Phone field must be set'))
 
         email = self.normalize_email(email)
-        user = self.model(email=email, phone=phone, name=name, **extra_fields)
-        user.set_password(password)
-        user.save(using=self._db)
+        user = self.model(email=email, phone=phone, name=name, password=password, **extra_fields)
+        user.save(using=self.db)
         return user
 
-    def create_superuser(self, email, phone, name, password=None, **extra_fields):
+    def create_superuser(self, email, phone, name, password, **extra_fields):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
         extra_fields.setdefault('is_active', True)
@@ -54,7 +52,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         return f"{self.email} | {self.phone}"
 
     def save(self, *args, **kwargs):
-        if not self.pk or not self.password.startswith('pbkdf2_'):
+        if not self.password.startswith('pbkdf2_'):
             self.set_password(self.password)
         elif self.password.startswith('pbkdf2_'):
             del self.password

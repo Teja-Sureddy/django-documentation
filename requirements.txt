@@ -7,3 +7,5 @@ django-filter==23.5  # filters
 django_htmx==1.17.2  # ajax calls
 django-phonenumber-field==7.3.0  # phone number field
 django_phonenumbers==1.0.1
+django-allauth==0.61.1
+django-allauth[mfa]
