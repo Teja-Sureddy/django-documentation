@@ -14,3 +14,8 @@ class CustomSignupForm(SignupForm):
         user.phone = self.cleaned_data['phone']
         user.save()
         return user
+
+    # remove element from html and use .ad_div
+    # user common css and as_div function
+    def as_div(self):
+        return 'lol'

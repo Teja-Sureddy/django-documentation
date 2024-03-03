@@ -7,12 +7,13 @@
         <title>
             {% block head_title %}
             {% endblock head_title %}
+            - My Project
         </title>
         {% block extra_head %}
         {% endblock extra_head %}
+        {% include 'components/head.html' %}
     </head>
     <body>
-    <h1>This is base</h1>
         {% block body %}
             {% if messages %}
                 <div>
@@ -22,26 +23,27 @@
                     </ul>
                 </div>
             {% endif %}
-            <div>
-                <strong>{% trans "Menu:" %}</strong>
-                <ul>
-                    {% if user.is_authenticated %}
-                        <li>
-                            <a href="{% url 'account_logout' %}">{% trans "Sign Out" %}</a>
-                        </li>
-                    {% else %}
-                        <li>
-                            <a href="{% url 'account_login' %}">{% trans "Sign In" %}</a>
-                        </li>
-                        <li>
-                            <a href="{% url 'account_signup' %}">{% trans "Sign Up" %}</a>
-                        </li>
-                    {% endif %}
-                </ul>
-            </div>
+<!--            <div>-->
+<!--                <strong>{% trans "Menu:" %}</strong>-->
+<!--                <ul>-->
+<!--                    {% if user.is_authenticated %}-->
+<!--                        <li>-->
+<!--                            <a href="{% url 'account_logout' %}">{% trans "Sign Out" %}</a>-->
+<!--                        </li>-->
+<!--                    {% else %}-->
+<!--                        <li>-->
+<!--                            <a href="{% url 'account_login' %}">{% trans "Sign In" %}</a>-->
+<!--                        </li>-->
+<!--                        <li>-->
+<!--                            <a href="{% url 'account_signup' %}">{% trans "Sign Up" %}</a>-->
+<!--                        </li>-->
+<!--                    {% endif %}-->
+<!--                </ul>-->
+<!--            </div>-->
             {% block content %}
             {% endblock content %}
         {% endblock body %}
+
         {% block extra_body %}
         {% endblock extra_body %}
     </body>

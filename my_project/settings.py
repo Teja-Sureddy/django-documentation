@@ -153,6 +153,7 @@ LOGIN_URL = '/user/login/'
 LOGIN_REDIRECT_URL = '/dashboard/profile/'
 ACCOUNT_FORMS = {
     'signup': 'users.forms.CustomSignupForm',
+    'login': 'users.forms.CustomLoginForm',
 }
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None

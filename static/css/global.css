@@ -79,6 +79,8 @@ a:focus {
 
 .errorlist{
     color: #dc3545;
+    margin-bottom: 0;
+    margin-top: 0.25rem;
 }
 
 .messages {
@@ -102,15 +104,6 @@ a:focus {
 
 .fs-9{
     font-size: 0.9rem;
-}
-
-.card {
-    margin: 3rem 1.5rem 5rem 1.5rem;
-    box-shadow: 0 0 10px 0 rgba(183, 192, 206, .2);
-    border: none;
-    height: calc(100vh - 8rem);
-    padding: 1.5rem;
-    background-color: #fff;
 }
 
 .btn-primary {
@@ -164,7 +157,38 @@ a:focus {
     font-size: 1rem;
 }
 
+.h-100vh{
+    height: 100vh;
+}
+
+.row{
+    --bs-gutter-x: 0 !important;
+}
+
+.card{
+    box-shadow: 0 0 10px 0 rgba(183,192,206,.2);
+    border: 0;
+}
+
+input[type="checkbox"] {
+    width: 16px !important;
+    height: 16px !important;
+}
+
+.w-768{
+    max-width: 768px;
+}
+
 /* profile */
+.table-card {
+    margin: 3rem 1.5rem 5rem 1.5rem;
+    box-shadow: 0 0 10px 0 rgba(183, 192, 206, .2);
+    border: none;
+    height: calc(100vh - 8rem);
+    padding: 1.5rem;
+    background-color: #fff;
+}
+
 .profile-table {
     height: calc(100vh - 128px);
     overflow: scroll;
@@ -232,4 +256,30 @@ a:focus {
     position: absolute;
     right: 1.5rem;
     bottom: 1.5rem
+}
+
+/* auth forms */
+.auth h1{
+    font-weight: 700;
+    font-size: 25px;
+    color: #000865;
+}
+
+.social-accounts h2{
+    display: none;
+}
+
+.social-accounts ul{
+    list-style-type: none;
+    text-align: center;
+    padding: 0;
+    margin-bottom: 0;
+}
+
+.social-accounts li {
+    display: inline-block;
+}
+
+.auth-form {
+
 }
