@@ -37,8 +37,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     username = None
 
     email = models.EmailField(_('Email'), unique=True)
-    phone = PhoneNumberField(_('Phone'), unique=True)
-    name = models.CharField(_('Name'), max_length=150)
+    phone = PhoneNumberField(_('Phone'), unique=True, null=True, blank=True)
+    name = models.CharField(_('Name'), max_length=150, null=True, blank=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
@@ -52,8 +52,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         return f"{self.email} | {self.phone}"
 
     def save(self, *args, **kwargs):
-        if not self.password.startswith('pbkdf2_'):
+        if self.password and not self.password.startswith('pbkdf2_'):
             self.set_password(self.password)
-        elif self.password.startswith('pbkdf2_'):
-            del self.password
         super().save(*args, **kwargs)
