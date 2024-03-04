@@ -154,6 +154,8 @@ LOGIN_REDIRECT_URL = '/dashboard/profile/'
 ACCOUNT_FORMS = {
     'signup': 'users.forms.CustomSignupForm',
     'login': 'users.forms.CustomLoginForm',
+    'reset_password': 'users.forms.CustomPasswordResetForm',
+    'reset_password_from_key': 'users.forms.CustomPasswordResetKeyForm',
 }
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None

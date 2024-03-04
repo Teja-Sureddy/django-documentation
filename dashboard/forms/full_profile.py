@@ -57,7 +57,7 @@ class FullProfileForm(forms.ModelForm):
         html = ''
         for field in self:
             html += f"""
-                <div class='mb-3 d-flex flex-column justify-content-start col-12 col-sm-6 col-lg-4'>
+                <div class='mb-3 px-2 d-flex flex-column justify-content-start col-12 col-sm-6 col-lg-4'>
                     <label class='form-label mb-2 fs-9' for="{field.id_for_label}">
                     {field.label}
                     <span class='text-danger'>{'*' if field.field.required and field.label else ''}</span>

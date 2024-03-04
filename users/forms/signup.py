@@ -2,6 +2,7 @@ from allauth.account.forms import SignupForm
 from django import forms
 from phonenumber_field.formfields import PhoneNumberField
 from django.utils.translation import gettext_lazy as _
+from users.utils import common_as_div
 
 
 class CustomSignupForm(SignupForm):
@@ -15,7 +16,5 @@ class CustomSignupForm(SignupForm):
         user.save()
         return user
 
-    # remove element from html and use .ad_div
-    # user common css and as_div function
     def as_div(self):
-        return 'lol'
+        return common_as_div(self)

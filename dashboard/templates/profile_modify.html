@@ -12,7 +12,7 @@
         </div>
     </div>
 
-    {% include "components/messages.html" with messages=messages %}
+    {% include "components/messages.html" with messages=messages class='table-messages' %}
 
     <div class="profile-table form-table">
         <form method="post" action="{% url 'dashboard:profile-edit' pk=pk %}" class="row">

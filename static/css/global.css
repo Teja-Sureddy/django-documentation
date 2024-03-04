@@ -63,7 +63,7 @@ h2 {
 }
 
 label {
-    width: 150px;
+    width: 100%;
 }
 
 a, .text-primary {
@@ -85,8 +85,8 @@ a:focus {
 
 .messages {
     position: absolute;
-    right: 0rem;
-    bottom: -4rem;
+    right: 2rem;
+    bottom: 2rem;
     background: #fff;
     padding: 1rem;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
@@ -189,6 +189,12 @@ input[type="checkbox"] {
     background-color: #fff;
 }
 
+
+.table-messages {
+    right: 0;
+    bottom: -4rem;
+}
+
 .profile-table {
     height: calc(100vh - 128px);
     overflow: scroll;
@@ -265,19 +271,39 @@ input[type="checkbox"] {
     color: #000865;
 }
 
-.social-accounts h2{
-    display: none;
+.auth p{
+    color: #6c757d !important;
+    font-size: 0.9rem;
 }
 
-.social-accounts ul{
-    list-style-type: none;
-    text-align: center;
-    padding: 0;
-    margin-bottom: 0;
-}
-
-.social-accounts li {
+.auth button {
+    color: #fff;
+    background-color: #727cf5;
+    border-color: #727cf5;
+    line-height: 1 !important;
+    padding: 8px 12px;
     display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    user-select: none;
+    font-size: 1rem;
+    border-radius: 0.25rem;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    box-shadow: none !important;
+    border: 1px solid transparent;
+    font-size: 0.9rem;
+}
+
+.auth button:hover, .auth button:focus {
+    color: #fff;
+    background-color: #4250f2;
+    border-color: #4250f2;
+}
+
+.social-link:hover, .social-link:focus{
+    box-shadow: 0 0 10px 0 rgb(114 124 245 / 25%) !important;
 }
 
 .auth-form {
