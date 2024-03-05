@@ -83,6 +83,11 @@ a:focus {
     margin-top: 0.25rem;
 }
 
+.errorlist.nonfield{
+    list-style-type: none;
+    padding: 0;
+}
+
 .messages {
     position: absolute;
     right: 2rem;
@@ -271,6 +276,11 @@ input[type="checkbox"] {
     color: #000865;
 }
 
+.auth h2{
+    color: #000865;
+    font-size: 1.15rem;
+}
+
 .auth p{
     color: #6c757d !important;
     font-size: 0.9rem;
@@ -304,8 +314,4 @@ input[type="checkbox"] {
 
 .social-link:hover, .social-link:focus{
     box-shadow: 0 0 10px 0 rgb(114 124 245 / 25%) !important;
-}
-
-.auth-form {
-
 }

@@ -156,6 +156,12 @@ ACCOUNT_FORMS = {
     'login': 'users.forms.CustomLoginForm',
     'reset_password': 'users.forms.CustomPasswordResetForm',
     'reset_password_from_key': 'users.forms.CustomPasswordResetKeyForm',
+    'reauthenticate': 'users.forms.CustomReauthenticateForm',
+}
+MFA_FORMS = {
+    'activate_totp': 'users.forms.mfa.CustomActivateTOTPForm',
+    'authenticate': 'users.forms.mfa.CustomAuthenticateForm',
+    'reauthenticate': 'users.forms.mfa.CustomAuthenticateForm',
 }
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
