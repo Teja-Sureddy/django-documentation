@@ -44,12 +44,12 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_superuser = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['name', 'phone']
+    REQUIRED_FIELDS = ['name']
 
     objects = UserManager()
 
     def __str__(self):
-        return f"{self.email} | {self.phone}"
+        return f"{self.email}"
 
     def save(self, *args, **kwargs):
         if self.password and not self.password.startswith('pbkdf2_'):

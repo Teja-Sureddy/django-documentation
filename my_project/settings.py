@@ -163,6 +163,7 @@ MFA_FORMS = {
     'authenticate': 'users.forms.mfa.CustomAuthenticateForm',
     'reauthenticate': 'users.forms.mfa.CustomAuthenticateForm',
 }
+SOCIALACCOUNT_ADAPTER = 'users.utils.CustomSocialAccountAdapter'
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_AUTHENTICATION_METHOD = 'email'

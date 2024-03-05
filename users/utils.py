@@ -1,4 +1,6 @@
 from django import forms
+from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
+from allauth.account.utils import user_field
 
 
 def common_as_div(self):
@@ -34,3 +36,13 @@ def common_as_div(self):
 
     html += errors
     return html
+
+
+# Custom Social Adapter to save the name while sign up
+class CustomSocialAccountAdapter(DefaultSocialAccountAdapter):
+    def populate_user(self, request, sociallogin, data):
+        user = super().populate_user(request, sociallogin, data)
+        first_name = data.get("first_name")
+        last_name = data.get("last_name")
+        user_field(user, "name", f"{first_name} {last_name}")
+        return user
