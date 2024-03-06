@@ -11,9 +11,15 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import environ
+import os
+
+env = environ.Env(DEBUG=(bool, False))
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -22,9 +28,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-fwbxeelgwxbx*+xp=qk7q07n7d#yaaafqrc1$!l@4lbhs+yyz-'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env.bool('DEBUG', False)
 
 ALLOWED_HOSTS = []
+
+INTERNAL_IPS = ["127.0.0.1"]
 
 # Application definition
 
@@ -91,9 +99,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'my_db',
-        'USER': 'postgres',
-        'PASSWORD': 'admin',
-        'HOST': 'localhost',
+        'USER': env('DB_USER'),
+        'PASSWORD': env('DB_PASSWORD'),
+        'HOST': env('DB_HOST'),
         'PORT': '5432'
     }
 }
@@ -138,7 +146,8 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Custom auth
+# Custom
+# auth
 AUTH_USER_MODEL = "users.User"
 
 # phone number field
@@ -177,8 +186,8 @@ SOCIALACCOUNT_PROVIDERS = {
         'SCOPE': ['profile', 'email'],
         'AUTH_PARAMS': {'access_type': 'online'},
         'APP': {
-            'client_id': '279230595747-jh43kofkc6qth38u4dnvnk4kv7sv41de.apps.googleusercontent.com',
-            'secret': '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',
+            'client_id': env('GOOGLE_OAUTH_CLIENT'),
+            'secret': env('GOOGLE_OAUTH_SECRET'),
             'key': ''
         }
     }
@@ -187,8 +196,8 @@ MFA_ADAPTER = "allauth.mfa.adapter.DefaultMFAAdapter"
 
 # email
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'sandbox.smtp.mailtrap.io'
-EMAIL_PORT = 2525
+EMAIL_HOST = env('EMAIL_HOST')
+EMAIL_PORT = env.int('EMAIL_PORT')
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = '6961971ab353c6'
-EMAIL_HOST_PASSWORD = '0b78caeeae6e9c'
+EMAIL_HOST_USER = env('EMAIL_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_PASSWORD')

@@ -16,7 +16,6 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include, re_path
-import debug_toolbar
 from django.views.generic import RedirectView
 # auth
 from allauth.account import views
@@ -63,5 +62,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('dashboard/', include('dashboard.urls')),
     path('user/', include(auth_urlpatterns + social_auth_urlpatterns + mfa_urlpatterns)),
-    path("__debug__/", include(debug_toolbar.urls)),
+    path("__debug__/", include('debug_toolbar.urls')),
 ]

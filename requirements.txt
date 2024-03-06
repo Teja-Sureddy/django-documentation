@@ -9,3 +9,4 @@ django-phonenumber-field==7.3.0  # phone number field
 django_phonenumbers==1.0.1
 django-allauth==0.61.1
 django-allauth[mfa]
+django-environ==0.11.2
