@@ -1,11 +1,11 @@
 # Django Documentation
 
-|                  |             |
-|------------------|-------------|
-| **OS**           | Windows     |
-| **DB Name**      | my_db       |
-| **Project Name** | my_project  |
-| **App Names**    | `dashboard` |
+|                  |                     |
+|------------------|---------------------|
+| **OS**           | Windows             |
+| **DB Name**      | my_db               |
+| **Project Name** | my_project          |
+| **App Names**    | `users` `dashboard` |
 
 
 ## Table of Contents
@@ -63,13 +63,14 @@ python manage.py runserver 8000
 ## Create an app
 
 There is no limitation of creating number of apps in django.<br>
-Create an app name called `dashboard`:
+Create an app name called `users` & `dashboard`:
 
 ```sh
+python manage.py startapp users
 python manage.py startapp dashboard
 ```
 
-Add `'dashboard.apps.DashboardConfig'` to the `INSTALLED_APPS` in [settings](my_project/settings.py) file and run the [migrations](#run-the-migrations).
+Add `'users', 'dashboard'` to the `INSTALLED_APPS` in [settings](my_project/settings.py) file and run the [migrations](#run-the-migrations).
 
 ## Configure python interpreter
 
@@ -138,12 +139,13 @@ python manage.py sqlmigrate <app_name> <migration_name>
 
 ## CRUD
 
-- Design models as per the [models](dashboard/views/profile.py) and run the [migrations](#run-the-migrations).
-- Run the [management commands](dashboard/management/commands/insert_dummy_data.py) to insert data.
+- Design models as per the [models](dashboard/views/data.py) and run the [migrations](#run-the-migrations).
+- Run the [management commands](dashboard/management/commands/add_data.py) to insert dummy data.
     ```s
-    python manage.py insert_dummy_data
+    python manage.py add_users
+    python manage.py add_data
     ```
-- See basic operations from [view](dashboard/views/profile.py) file.
+- See basic operations from [view](dashboard/views/data.py) file.
 
 
 ## Shell
