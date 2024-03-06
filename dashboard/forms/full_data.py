@@ -1,17 +1,17 @@
 from django import forms
-from dashboard.models import ProfileModel, FullProfileModel
+from dashboard.models import DataModel, FullDataModel
 
 
-class FullProfileForm(forms.ModelForm):
+class FullDataForm(forms.ModelForm):
     class Meta:
-        model = FullProfileModel
+        model = FullDataModel
         fields = ['name', 'email', 'age', 'gender', 'dob', 'tob', 'slug', 'website', 'ip_address',
                   'hair', 'hair_color', 'color', 'duration', 'json_data']
 
     name = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'Enter your Name'}))
     email = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder': 'Enter your Email'}))
     age = forms.IntegerField(widget=forms.NumberInput(attrs={'placeholder': 'Enter your Age'}))
-    gender = forms.ChoiceField(choices=[('', 'Select gender'), ] + ProfileModel.GENDERS)
+    gender = forms.ChoiceField(choices=[('', 'Select gender'), ] + DataModel.GENDERS)
     dob = forms.DateField(label='Date of birth', widget=forms.DateInput(attrs={'placeholder': 'YYYY-MM-DD'}))
     tob = forms.TimeField(label='Time of birth', widget=forms.TimeInput(attrs={'placeholder': 'HH:MM'}))
     slug = forms.SlugField(widget=forms.TextInput(attrs={'placeholder': 'Enter slug'}))
@@ -20,14 +20,14 @@ class FullProfileForm(forms.ModelForm):
 
     def __init__(self, *args, pk=None, **kwargs):
         self.pk = pk
-        super(FullProfileForm, self).__init__(*args, **kwargs)
+        super(FullDataForm, self).__init__(*args, **kwargs)
         self.fields['hair'].empty_label = 'Select hair'
-        self.fields['hair_color'].choices = [('', 'Select hair color')] + FullProfileModel.HairColor.choices
+        self.fields['hair_color'].choices = [('', 'Select hair color')] + FullDataModel.HairColor.choices
         self.fields['duration'].widget.attrs['placeholder'] = 'Enter duration'
         self.fields['json_data'].widget.attrs['placeholder'] = 'Enter JSON'
 
     def save(self, commit=True):
-        profile_data = {
+        data_data = {
             'name': self.cleaned_data['name'],
             'email': self.cleaned_data['email'],
             'age': self.cleaned_data['age'],
@@ -40,18 +40,18 @@ class FullProfileForm(forms.ModelForm):
         }
 
         if self.pk is not None:
-            full_profile = FullProfileModel.objects.get(pk=self.pk)
-            profile = full_profile.profile
-            profile.__dict__.update(**profile_data)
-            profile.save()
+            full_data = FullDataModel.objects.get(pk=self.pk)
+            data = full_data.data
+            data.__dict__.update(**data_data)
+            data.save()
         else:
-            profile = ProfileModel.objects.create(**profile_data)
+            data = DataModel.objects.create(**data_data)
 
         self.instance.pk = self.pk
-        self.instance.profile = profile
-        full_profile = super().save(commit=commit)
-        full_profile.color.set(self.cleaned_data['color'])
-        return full_profile
+        self.instance.data = data
+        full_data = super().save(commit=commit)
+        full_data.color.set(self.cleaned_data['color'])
+        return full_data
 
     def as_div(self):
         html = ''
@@ -62,7 +62,7 @@ class FullProfileForm(forms.ModelForm):
                     {field.label}
                     <span class='text-danger'>{'*' if field.field.required and field.label else ''}</span>
                     </label>
-                    <div class='profile-form'>{field.as_widget()}</div>
+                    <div class='data-form'>{field.as_widget()}</div>
                     <div class='text-danger fs-9 mt-1'>{field.errors}</div>
                 </div>
             """

@@ -159,7 +159,7 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 LOGIN_URL = '/user/login/'
-LOGIN_REDIRECT_URL = '/dashboard/profile/'
+LOGIN_REDIRECT_URL = '/dashboard/data/'
 ACCOUNT_FORMS = {
     'signup': 'users.forms.CustomSignupForm',
     'login': 'users.forms.CustomLoginForm',

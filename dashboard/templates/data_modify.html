@@ -14,12 +14,12 @@
 
     {% include "components/messages.html" with messages=messages class='table-messages' %}
 
-    <div class="profile-table form-table">
-        <form method="post" action="{% url 'dashboard:profile-edit' pk=pk %}" class="row">
+    <div class="data-table form-table">
+        <form method="post" action="{% url 'dashboard:data-edit' pk=pk %}" class="row">
             {% csrf_token %}
             {{ form.as_div|safe }}  <!--use as_p if not using as_div-->
             <div class="form-submit d-flex justify-content-end align-items-center">
-                <a href="{% url 'dashboard:profile' %}"
+                <a href="{% url 'dashboard:data' %}"
                    class="btn btn-secondary me-1 text-white text-decoration-none">Back</a>
                 <button type="submit" class="btn btn-primary ms-1">{% if pk %}Update{% else %}Add{% endif %}</button>
             </div>

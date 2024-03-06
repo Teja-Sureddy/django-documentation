@@ -1,7 +1,7 @@
 import random
 from django.core.management.base import BaseCommand
 from django.utils import timezone
-from dashboard.models import ProfileModel, ColorModel, HairModel, FullProfileModel
+from dashboard.models import DataModel, ColorModel, HairModel, FullDataModel
 import string
 import ipaddress
 from datetime import timedelta
@@ -29,16 +29,16 @@ def generate_random_duration():
 
 
 class Command(BaseCommand):
-    help = 'Inserts dummy data into ProfileModel, ColorModel, HairModel, and FullProfileModel'
+    help = 'Inserts dummy data into DataModel, ColorModel, HairModel, and FullDataModel'
 
     def handle(self, *args, **options):
-        # Insert dummy data into ProfileModel
+        # Insert dummy data into DataModel
         for _ in range(1000):
             rand = random.randint(1000, 9999)
-            existing_instance = ProfileModel.objects.filter(email=f'person_{rand}@example.com').first()
+            existing_instance = DataModel.objects.filter(email=f'person_{rand}@example.com').first()
 
             if existing_instance is None:
-                ProfileModel.objects.create(
+                DataModel.objects.create(
                     name=f'Person {rand}',
                     email=f'person_{rand}@example.com',
                     age=random.randint(10, 60),
@@ -48,7 +48,7 @@ class Command(BaseCommand):
                     ip_address=generate_random_ip(),
                     website=generate_random_website()
                 )
-        print('ProfileModel Done.')
+        print('DataModel Done.')
 
         # Insert dummy data into ColorModel
         favorite_colors = ['Red', 'Blue', 'Green', 'Yellow', 'Purple']
@@ -68,14 +68,14 @@ class Command(BaseCommand):
             )
         print('HairModel Done.')
 
-        # Insert dummy data into FullProfileModel
-        profile_instances = ProfileModel.objects.all()
+        # Insert dummy data into FullDataModel
+        data_instances = DataModel.objects.all()
         color_instances = ColorModel.objects.all()
         hair_instances = HairModel.objects.all()
 
         for _ in range(1000):
-            profile_instance = random.choice(profile_instances)
-            existing_instance = FullProfileModel.objects.filter(profile=profile_instance).first()
+            data_instance = random.choice(data_instances)
+            existing_instance = FullDataModel.objects.filter(data=data_instance).first()
             data = {
                 "name": ''.join(random.choice(string.ascii_letters) for _ in range(10)),
                 "age": random.randint(18, 60),
@@ -84,13 +84,13 @@ class Command(BaseCommand):
             }
 
             if existing_instance is None:
-                FullProfileModel.objects.create(
+                FullDataModel.objects.create(
                     hair_color=random.choice(['BL', 'BR', 'BK', 'RD', 'OT']),
                     duration=str(generate_random_duration()),
                     json_data=data,
-                    profile=profile_instance,
+                    data=data_instance,
                     hair=random.choice(hair_instances)
                 ).color.set(random.sample(list(color_instances), random.randint(1, 3)))
-        print('FullProfileModel Done.')
+        print('FullDataModel Done.')
 
         self.stdout.write(self.style.SUCCESS('Successfully inserted dummy data.'))

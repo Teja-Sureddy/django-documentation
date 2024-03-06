@@ -1,2 +1,2 @@
-from dashboard.views.profile import ProfileView
-from dashboard.views.profile_modify import ProfileModifyView
+from dashboard.views.data import DataView
+from dashboard.views.data_modify import DataModifyView

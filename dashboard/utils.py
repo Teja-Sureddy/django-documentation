@@ -1,6 +1,6 @@
 import django_filters
 import django_tables2 as tables
-from dashboard.models import FullProfileModel
+from dashboard.models import FullDataModel
 from django.utils.html import format_html, escape
 from django.utils.safestring import mark_safe
 from datetime import datetime
@@ -23,12 +23,12 @@ def format_datetime(value):
     return ''
 
 
-class FullProfileTable(tables.Table):
+class FullDataTable(tables.Table):
     class Meta:
-        model = FullProfileModel
+        model = FullDataModel
         template_name = 'django_tables2/bootstrap4.html'
         attrs = {'class': 'table table-hover table-white mb-0'}
-        exclude = ('id', 'json_data', 'profile', 'color', 'hair')
+        exclude = ('id', 'json_data', 'data', 'color', 'hair')
         sequence = ('name', 'email', 'age', 'dob_tob', 'gender', 'ip_address', 'slug', 'website', 'identity',
                     'hair_color', 'duration', 'is_hair_styled', 'hair_length_cm', 'hair_color_intensity',
                     'hair_shine_factor', 'hair_description', 'favorite_colors', 'created_at', 'updated_at', 'actions')
@@ -45,20 +45,20 @@ class FullProfileTable(tables.Table):
 
     favorite_colors = tables.Column(accessor='color.all', verbose_name='Favorite Colors')
 
-    name = tables.Column(accessor='profile.name', verbose_name='Name')
-    email = tables.Column(accessor='profile.email', verbose_name='Email')
-    age = tables.Column(accessor='profile.age', verbose_name='Age')
+    name = tables.Column(accessor='data.name', verbose_name='Name')
+    email = tables.Column(accessor='data.email', verbose_name='Email')
+    age = tables.Column(accessor='data.age', verbose_name='Age')
     dob_tob = tables.Column(verbose_name='DOB & TOB', empty_values=())
-    gender = tables.Column(accessor='profile.gender', verbose_name='Gender')
-    ip_address = tables.Column(accessor='profile.ip_address', verbose_name='IP Address')
-    slug = tables.Column(accessor='profile.slug', verbose_name='Slug')
-    website = tables.Column(accessor='profile.website', verbose_name='Website')
-    identity = tables.Column(accessor='profile.identity', verbose_name='Identity')
-    created_at = tables.Column(accessor='profile.created_at', verbose_name='Created At')
-    updated_at = tables.Column(accessor='profile.updated_at', verbose_name='Updated At')
+    gender = tables.Column(accessor='data.gender', verbose_name='Gender')
+    ip_address = tables.Column(accessor='data.ip_address', verbose_name='IP Address')
+    slug = tables.Column(accessor='data.slug', verbose_name='Slug')
+    website = tables.Column(accessor='data.website', verbose_name='Website')
+    identity = tables.Column(accessor='data.identity', verbose_name='Identity')
+    created_at = tables.Column(accessor='data.created_at', verbose_name='Created At')
+    updated_at = tables.Column(accessor='data.updated_at', verbose_name='Updated At')
 
     actions = tables.TemplateColumn(
-        template_code='''<a href="{% url 'dashboard:profile-edit' pk=record.id %}" class="text-primary me-1 py-1">Edit</a>
+        template_code='''<a href="{% url 'dashboard:data-edit' pk=record.id %}" class="text-primary me-1 py-1">Edit</a>
                          <a href="#" data-bs-toggle="modal" data-bs-target="#deleteModel" data-pk="{{ record.id }}" 
                          class="text-danger ms-1 py-1">Delete</a>''',
         verbose_name='Actions',
@@ -89,8 +89,8 @@ class FullProfileTable(tables.Table):
 
     @staticmethod
     def render_dob_tob(record):
-        dob = record.profile.dob
-        tob = record.profile.tob
+        dob = record.data.dob
+        tob = record.data.tob
         if dob and tob:
             formatted_dob_tob = format_html('{} {}', dob.strftime('%Y-%m-%d'), tob.strftime('%H:%M %p'))
             return format_datetime(str.__str__(formatted_dob_tob))
@@ -142,39 +142,39 @@ class CustomRangeWidget(django_filters.widgets.RangeWidget):
         return html
 
 
-class FullProfileFilter(django_filters.FilterSet):
+class FullDataFilter(django_filters.FilterSet):
     class Meta:
-        model = FullProfileModel
+        model = FullDataModel
         fields = {
-            'profile__name': ['icontains'],
-            'profile__age': ['range'],
-            'profile__dob': ['range'],
+            'data__name': ['icontains'],
+            'data__age': ['range'],
+            'data__dob': ['range'],
             'hair_color': ['exact'],
             'hair__hair_length_cm': ['range'],
         }
 
-    profile__name__icontains = django_filters.CharFilter(
-        field_name='profile__name',
+    data__name__icontains = django_filters.CharFilter(
+        field_name='data__name',
         lookup_expr='icontains',
         label='Enter name',
         widget=forms.TextInput(attrs={'placeholder': 'Name'}),
     )
 
-    profile__age__range = django_filters.RangeFilter(
-        field_name='profile__age',
+    data__age__range = django_filters.RangeFilter(
+        field_name='data__age',
         label='Age',
         widget=CustomRangeWidget({'ph1': 'Min age', 'ph2': 'Max age'})
     )
 
-    profile__dob__range = django_filters.DateFromToRangeFilter(
-        field_name='profile__dob',
+    data__dob__range = django_filters.DateFromToRangeFilter(
+        field_name='data__dob',
         label='Date of birth',
         widget=CustomRangeWidget({'ph1': 'Min YYYY-MM-DD', 'ph2': 'Max YYYY-MM-DD'})
     )
 
     hair_color = django_filters.ChoiceFilter(
         field_name='hair_color',
-        choices=FullProfileModel.HairColor.choices,
+        choices=FullDataModel.HairColor.choices,
         label='Hair Color',
         empty_label='Select hair color'
     )

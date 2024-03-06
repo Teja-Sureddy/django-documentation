@@ -1,9 +1,9 @@
 from django.db import models
-from dashboard.models import ProfileModel
+from dashboard.models import DataModel
 
 
 class UploadDocumentsModel(models.Model):
-    profile = models.OneToOneField(ProfileModel, on_delete=models.CASCADE, unique=True)
+    data = models.OneToOneField(DataModel, on_delete=models.CASCADE, unique=True)
     file_field = models.FileField(upload_to='files/')
     image_field = models.ImageField(upload_to='images/')
     # contains all params
@@ -19,4 +19,4 @@ class UploadDocumentsModel(models.Model):
     )
 
     def __str__(self):
-        return self.profile.name
+        return self.data.name

@@ -184,7 +184,7 @@ input[type="checkbox"] {
     max-width: 768px;
 }
 
-/* profile */
+/* data */
 .table-card {
     margin: 3rem 1.5rem 5rem 1.5rem;
     box-shadow: 0 0 10px 0 rgba(183, 192, 206, .2);
@@ -200,33 +200,33 @@ input[type="checkbox"] {
     bottom: -4rem;
 }
 
-.profile-table {
+.data-table {
     height: calc(100vh - 128px);
     overflow: scroll;
     border: 1px solid #a5b4d3;
 }
 
-.profile-table::-webkit-scrollbar{
+.data-table::-webkit-scrollbar{
     width: 16px;
     height: 16px;
     margin: auto;
 }
 
-.profile-table::-webkit-scrollbar-track {
+.data-table::-webkit-scrollbar-track {
   background: #f5f7ff;
   border-left: 1px solid #a5b4d3;
   border-top: 1px solid #a5b4d3;
 }
 
-.profile-table::-webkit-scrollbar-thumb {
+.data-table::-webkit-scrollbar-thumb {
   background: #b5b9eb;
 }
 
-.profile-table::-webkit-scrollbar-thumb:hover {
+.data-table::-webkit-scrollbar-thumb:hover {
   background: #979ef3;
 }
 
-.profile-form input, .profile-form select, .profile-form textarea{
+.data-form input, .data-form select, .data-form textarea{
     width: 100%;
     padding: 0.5rem 0.8rem;
     line-height: 1.5;
@@ -238,20 +238,20 @@ input[type="checkbox"] {
     box-shadow: none;
 }
 
-.profile-form input:focus, .profile-form select:focus, .profile-form textarea:focus{
+.data-form input:focus, .data-form select:focus, .data-form textarea:focus{
     border-color: #ced4da
 }
 
-.profile-form textarea{
+.data-form textarea{
     height: 40px;
 }
 
-.profile-form select option{
+.data-form select option{
     padding: 0.25rem 0rem;
 
 }
 
-/* add profile */
+/* add data */
 .form-table {
     overflow-x: auto;
     margin-bottom: 56px;

@@ -14,13 +14,13 @@
                 </button>
             </div>
             <div>
-                <a href="{% url 'dashboard:profile-add' %}" class="btn btn-primary text-white text-decoration-none">Add</a>
+                <a href="{% url 'dashboard:data-add' %}" class="btn btn-primary text-white text-decoration-none">Add</a>
             </div>
         </div>
 
         {% include "components/messages.html" with messages=messages class='table-messages' %}
 
-        <div class="profile-table">
+        <div class="data-table">
             {% render_table table %}
             {% if not table.data %}
             <p class="mt-3 text-center text-primary">No data available.</p>
@@ -46,7 +46,7 @@
                     {% for filter in filter.form %}
                     <div class="mb-3 d-flex flex-column justify-content-start">
                         <label for="{{ filter.name }}" class="form-label mb-2 fs-9">{{ filter.label }}</label>
-                        <div class="profile-form">{{ filter }}</div>
+                        <div class="data-form">{{ filter }}</div>
                     </div>
                     {% endfor %}
                     <div class="d-flex justify-content-end align-items-center mb-2 mt-4">

@@ -1,1 +1,1 @@
-from dashboard.forms.full_profile import FullProfileForm
+from dashboard.forms.full_data import FullDataForm
