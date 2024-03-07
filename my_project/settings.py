@@ -70,6 +70,7 @@ MIDDLEWARE = [
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django_htmx.middleware.HtmxMiddleware',
     'allauth.account.middleware.AccountMiddleware',
+    'users.middleware.AuditLogMiddleware',
 ]
 
 ROOT_URLCONF = 'my_project.urls'

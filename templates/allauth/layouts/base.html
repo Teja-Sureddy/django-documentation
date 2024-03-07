@@ -21,6 +21,9 @@
                     <div class="card">
                         <div class="row w-100 margin-auto">
                             <div class="px-4 py-5 auth">
+                                {% if user.is_authenticated %}
+                                <div class="mb-2"><a href="{% url 'dashboard:data' %}">Home</a></div>
+                                {% endif %}
                                 {% block content %}
                                 {% endblock content %}
                             </div>

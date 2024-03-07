@@ -1,5 +1,5 @@
 from django.contrib import admin
-from users.models import User
+from users.models import User, AuditLog
 from django.contrib.auth.models import Permission
 
 
@@ -11,4 +11,5 @@ class CustomUserAdmin(admin.ModelAdmin):
 
 
 admin.site.register(User, CustomUserAdmin)
+admin.site.register(AuditLog)
 admin.site.register(Permission)
