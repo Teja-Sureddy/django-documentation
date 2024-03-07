@@ -8,6 +8,7 @@ from users.utils import is_authorized
 
 
 class DataModifyView(View):
+    @is_authorized(permissions=['post_data'])
     def get(self, request, pk=None):
         context = {
             'title': self.get_text(pk, 'title'), 'pk': pk,

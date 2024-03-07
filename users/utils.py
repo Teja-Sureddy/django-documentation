@@ -2,6 +2,7 @@ from django import forms
 from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
 from allauth.account.utils import user_field
 from django.core.exceptions import PermissionDenied
+from django.contrib.auth.models import Permission
 
 
 def common_as_div(self):
@@ -55,13 +56,16 @@ def is_authorized(groups=[], permissions=[]):
             request = args[0].request if hasattr(args[0], 'request') else args[0]
             user = getattr(request, 'user', None)
 
-            group_filter = groups and (not user or not user.groups.filter(name__in=groups).exists())
-            permission_filter = permissions and not user.has_perms(permissions)
+            user_group_permissions = Permission.objects.filter(group__user=user)
+            group_filter = any(query_set.codename in groups for query_set in user_group_permissions)
+
+            user_permissions = Permission.objects.filter(user=user)
+            permission_filter = any(query_set.codename in permissions for query_set in user_permissions)
 
             if group_filter or permission_filter:
-                raise PermissionDenied
+                return view_func(*args, **kwargs)
 
-            return view_func(request, *args, **kwargs)
+            raise PermissionDenied
 
         return wrapper
 
