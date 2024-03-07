@@ -1,6 +1,7 @@
 from django import forms
 from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
 from allauth.account.utils import user_field
+from django.core.exceptions import PermissionDenied
 
 
 def common_as_div(self):
@@ -46,3 +47,22 @@ class CustomSocialAccountAdapter(DefaultSocialAccountAdapter):
         last_name = data.get("last_name")
         user_field(user, "name", f"{first_name} {last_name}")
         return user
+
+
+def is_authorized(groups=[], permissions=[]):
+    def decorator(view_func):
+        def wrapper(*args, **kwargs):
+            request = args[0].request if hasattr(args[0], 'request') else args[0]
+            user = getattr(request, 'user', None)
+
+            group_filter = groups and (not user or not user.groups.filter(name__in=groups).exists())
+            permission_filter = permissions and not user.has_perms(permissions)
+
+            if group_filter or permission_filter:
+                raise PermissionDenied
+
+            return view_func(request, *args, **kwargs)
+
+        return wrapper
+
+    return decorator

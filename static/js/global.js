@@ -6,6 +6,7 @@ function clearAll() {
 
 //Delete
 $('#deleteModel').on('show.bs.modal', function (event) {
+    $('#delete-error-msg').text('')
     var button = $(event.relatedTarget);
     var pk = button.data('pk');
     var csrfToken = $('[name="csrfmiddlewaretoken"]').val();
@@ -23,7 +24,8 @@ function deleteItem(pk, csrfToken) {
             location.reload();
         },
         error: function (error) {
-            console.error('Error deleting item:', error.responseJSON);
+            console.error('Error deleting item:', error);
+            $('#delete-error-msg').text('Error deleting item.')
         }
     });
 }

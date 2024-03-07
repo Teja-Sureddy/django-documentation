@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.views import View
 from django.shortcuts import render, get_object_or_404
 from dashboard.models import FullDataModel
+from users.utils import is_authorized
 
 
 class DataModifyView(View):
@@ -14,6 +15,7 @@ class DataModifyView(View):
         }
         return render(request, 'data_modify.html', context)
 
+    @is_authorized(permissions=['post_data'])
     def post(self, request, pk=None):
         if pk == 'None':
             pk = None

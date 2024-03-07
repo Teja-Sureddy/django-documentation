@@ -5,6 +5,7 @@ from dashboard.models import FullDataModel
 from dashboard.utils import FullDataTable, FullDataFilter
 from django.contrib import messages
 from django.http import JsonResponse
+from users.utils import is_authorized
 
 
 class DataView(SingleTableView, FilterView):
@@ -41,6 +42,7 @@ class DataView(SingleTableView, FilterView):
         return context
 
     @staticmethod
+    @is_authorized(permissions=['delete_data'])
     def delete(request, pk):
         if request.method == 'DELETE':
             instance = get_object_or_404(FullDataModel, pk=pk)
