@@ -184,3 +184,10 @@ class FullDataFilter(django_filters.FilterSet):
         label='Hair Length',
         widget=CustomRangeWidget({'ph1': 'Min length', 'ph2': 'Max length'})
     )
+
+
+def set_dropdown_attrs(fields):
+    for key, value in fields.items():
+        if type(value) in (forms.ChoiceField, forms.ModelChoiceField,
+                           forms.TypedChoiceField, forms.ModelMultipleChoiceField):
+            value.widget.attrs['class'] = 'd-none select2'

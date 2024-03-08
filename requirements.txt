@@ -11,3 +11,4 @@ django-allauth==0.61.1  # for auth and social auth
 django-allauth[mfa]  # for mfa auth
 django-environ==0.11.2  # for env variables
 djangorestframework==3.14.0  # rest apis
+django-forms-dynamic==1.0.0

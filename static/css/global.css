@@ -231,7 +231,7 @@ input[type="checkbox"] {
 }
 
 .select2-selection__rendered{
-    padding: 0.25rem 0.5rem !important;
+    padding: 0.25rem 0.75rem !important;
     font-size: 0.9rem !important;
 }
 

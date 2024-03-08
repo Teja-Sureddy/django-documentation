@@ -1,8 +1,15 @@
 from django import forms
 from dashboard.models import DataModel, FullDataModel
+from dynamic_forms import DynamicFormMixin, DynamicField
+from dashboard.utils import set_dropdown_attrs
+
+HX_ATTRIBUTES = {
+    "hx-trigger": "change delay:1000ms",
+    "hx-target": "#body",
+}
 
 
-class FullDataForm(forms.ModelForm):
+class FullDataForm(DynamicFormMixin, forms.ModelForm):
     class Meta:
         model = FullDataModel
         fields = ['name', 'email', 'age', 'gender', 'dob', 'tob', 'slug', 'website', 'ip_address',
@@ -12,8 +19,20 @@ class FullDataForm(forms.ModelForm):
     email = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder': 'Enter your Email'}))
     age = forms.IntegerField(widget=forms.NumberInput(attrs={'placeholder': 'Enter your Age'}))
     gender = forms.ChoiceField(choices=[('', 'Select gender'), ] + DataModel.GENDERS)
-    dob = forms.DateField(label='Date of birth', widget=forms.DateInput(attrs={'placeholder': 'YYYY-MM-DD'}))
-    tob = forms.TimeField(label='Time of birth', widget=forms.TimeInput(attrs={'placeholder': 'HH:MM'}))
+
+    dob = DynamicField(
+        forms.DateField,
+        include=lambda form: str(form['gender'].value()) in ('M', 'F'),
+        label='Date of birth',
+        widget=forms.DateInput(attrs={'placeholder': 'YYYY-MM-DD'})
+    )
+    tob = DynamicField(
+        forms.TimeField,
+        include=lambda form: str(form['gender'].value()) in ('M', 'F'),
+        label='Time of birth',
+        widget=forms.TimeInput(attrs={'placeholder': 'HH:MM'})
+    )
+
     slug = forms.SlugField(widget=forms.TextInput(attrs={'placeholder': 'Enter slug'}))
     website = forms.URLField(initial='https://', widget=forms.URLInput(attrs={'placeholder': 'Enter website URL'}))
     ip_address = forms.GenericIPAddressField(widget=forms.TextInput(attrs={'placeholder': 'Enter IP address'}))
@@ -25,10 +44,11 @@ class FullDataForm(forms.ModelForm):
         self.fields['duration'].widget.attrs['placeholder'] = 'Enter duration'
         self.fields['json_data'].widget.attrs['placeholder'] = 'Enter JSON'
 
-        for field in self.fields:
-            if isinstance(field, forms.ChoiceField) or isinstance(field, forms.ModelChoiceField) or \
-                    isinstance(field, forms.TypedChoiceField) or isinstance(field, forms.ModelMultipleChoiceField):
-                field.widget.attrs['class'] = 'd-none select2'
+        set_dropdown_attrs(self.fields)
+
+        path = kwargs.get('context', {}).get('request').path
+        if path:
+            self.fields['gender'].widget.attrs.update({"hx-post": f"{path}?ignore_validation=true", **HX_ATTRIBUTES})
 
     def save(self, commit=True):
         data_data = {

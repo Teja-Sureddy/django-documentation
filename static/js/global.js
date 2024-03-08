@@ -1,3 +1,7 @@
+document.body.addEventListener('htmx:load', function() {
+    run_select2()
+})
+
 // Clear all Filters
 function clearAll() {
     var url = window.location.href.split('?')[0];
@@ -44,6 +48,13 @@ function hideMessages() {
 hideMessages()
 
 // Custom multi select
-$(document).ready(function() {
-    $('.select2').select2( { placeholder: "Select", maximumSelectionSize: 100  } );
-})
+function run_select2(){
+    $('.select2').select2( { placeholder: "Select", maximumSelectionSize: 100 });
+    $('.select2').on("select2:select", function (e) { dispatchSelect() });
+    $('.select2').on("select2:unselect", function (e) { dispatchSelect() });
+}
+
+function dispatchSelect(){
+    var element = document.getElementById('id_gender');
+    element.dispatchEvent(new Event('change'));
+}

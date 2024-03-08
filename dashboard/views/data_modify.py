@@ -20,12 +20,15 @@ class DataModifyView(View):
     def post(self, request, pk=None):
         if pk == 'None':
             pk = None
-        form = FullDataForm(request.POST, pk=pk)
+        form = FullDataForm(request.POST, pk=pk, context={'request': request})
 
         if form.is_valid():
             form.save()
             messages.success(request, self.get_text(pk, 'message'))
             return self.get_text(pk, 'path')
+
+        if bool(self.request.GET.get('ignore_validation', False)):
+            form.errors.clear()
 
         context = {
             'title': self.get_text(pk, 'title'),
@@ -37,8 +40,8 @@ class DataModifyView(View):
     def get_full_data_form(self, pk):
         instance = get_object_or_404(FullDataModel, pk=pk) if pk else None
         if instance:
-            return FullDataForm(instance=instance, initial=self.get_initials(instance))
-        return FullDataForm()
+            return FullDataForm(instance=instance, initial=self.get_initials(instance), context={'request': self.request})
+        return FullDataForm(context={'request': self.request})
 
     @staticmethod
     def get_initials(instance):
