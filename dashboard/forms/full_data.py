@@ -21,10 +21,14 @@ class FullDataForm(forms.ModelForm):
     def __init__(self, *args, pk=None, **kwargs):
         self.pk = pk
         super(FullDataForm, self).__init__(*args, **kwargs)
-        self.fields['hair'].empty_label = 'Select hair'
         self.fields['hair_color'].choices = [('', 'Select hair color')] + FullDataModel.HairColor.choices
         self.fields['duration'].widget.attrs['placeholder'] = 'Enter duration'
         self.fields['json_data'].widget.attrs['placeholder'] = 'Enter JSON'
+
+        for field in self.fields:
+            if isinstance(field, forms.ChoiceField) or isinstance(field, forms.ModelChoiceField) or \
+                    isinstance(field, forms.TypedChoiceField) or isinstance(field, forms.ModelMultipleChoiceField):
+                field.widget.attrs['class'] = 'd-none select2'
 
     def save(self, commit=True):
         data_data = {

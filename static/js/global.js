@@ -1,10 +1,10 @@
-//Clear all Filters
+// Clear all Filters
 function clearAll() {
     var url = window.location.href.split('?')[0];
     window.location.href = url;
 }
 
-//Delete
+// Delete
 $('#deleteModel').on('show.bs.modal', function (event) {
     $('#delete-error-msg').text('')
     var button = $(event.relatedTarget);
@@ -30,7 +30,7 @@ function deleteItem(pk, csrfToken) {
     });
 }
 
-//Message
+// Message
 function hideMessages() {
     var messages = $('.messages');
     var messagesClose = $('#messages-close');
@@ -42,3 +42,8 @@ function hideMessages() {
 }
 
 hideMessages()
+
+// Custom multi select
+$(document).ready(function() {
+    $('.select2').select2( { placeholder: "Select", maximumSelectionSize: 100  } );
+})
