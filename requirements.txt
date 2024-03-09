@@ -1,7 +1,6 @@
 Django==4.2
 psycopg2==2.9.9  # For postgres
 django-debug-toolbar==4.2  # For debugging
-Pillow==10.2.0  # For ImageField
 django-tables2==2.7.0  # tables
 django-filter==23.5  # filters
 django_htmx==1.17.2  # ajax calls
@@ -12,3 +11,4 @@ django-allauth[mfa]  # for mfa auth
 django-environ==0.11.2  # for env variables
 djangorestframework==3.14.0  # rest apis
 django-forms-dynamic==1.0.0
+Pillow==10.2.0  # For image processing

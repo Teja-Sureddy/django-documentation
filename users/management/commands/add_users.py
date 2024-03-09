@@ -2,6 +2,7 @@ from django.core.management.base import BaseCommand
 from users.models import User
 from django.contrib.auth.models import Permission
 from django.contrib.contenttypes.models import ContentType
+from allauth.account.models import EmailAddress
 
 
 class Command(BaseCommand):
@@ -18,6 +19,7 @@ class Command(BaseCommand):
         user_data = {'name': 'test', 'password': 'test', 'email': 'test@gmail.com', 'phone': '9999999999'}
         user, created = User.objects.get_or_create(email=user_data['email'], defaults=user_data)
         if created:
+            EmailAddress.objects.create(user=user, email=user.email, primary=True, verified=True)
             print('test user created.')
 
         content_type = ContentType.objects.get(app_label='auth', model='permission')

@@ -147,6 +147,11 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Media files (files, images)
+MEDIA_URL = 'media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
 # Custom
 # auth
 AUTH_USER_MODEL = "users.User"
@@ -169,9 +174,9 @@ ACCOUNT_FORMS = {
     'reauthenticate': 'users.forms.CustomReauthenticateForm',
 }
 MFA_FORMS = {
-    'activate_totp': 'users.forms.mfa.CustomActivateTOTPForm',
-    'authenticate': 'users.forms.mfa.CustomAuthenticateForm',
-    'reauthenticate': 'users.forms.mfa.CustomAuthenticateForm',
+    'activate_totp': 'users.forms.CustomActivateTOTPForm',
+    'authenticate': 'users.forms.CustomAuthenticateForm',
+    'reauthenticate': 'users.forms.CustomAuthenticateForm',
 }
 SOCIALACCOUNT_ADAPTER = 'users.utils.CustomSocialAccountAdapter'
 ACCOUNT_USERNAME_REQUIRED = False

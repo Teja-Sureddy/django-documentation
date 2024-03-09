@@ -59,6 +59,7 @@ mfa_urlpatterns = [
 
 urlpatterns = [
     path('', RedirectView.as_view(url='/user/'), name='home_redirect'),
+    path('', include('users.urls')),
     path('admin/', admin.site.urls),
     path('dashboard/', include('dashboard.urls')),
     path('user/', include(auth_urlpatterns + social_auth_urlpatterns + mfa_urlpatterns)),

@@ -16,11 +16,11 @@
     {% include "components/messages.html" with messages=messages class='table-messages' %}
 
     <div class="data-table form-table">
-        <form method="post" action="{% url 'dashboard:data-edit' pk=pk %}" class="row">
+        <form method="post" class="row" enctype="multipart/form-data">
             {% csrf_token %}
-            {{ form.as_div|safe }}  <!--use as_p if not using as_div-->
+            {{ form.as_div|safe }}
             <div class="form-submit d-flex justify-content-end align-items-center">
-                <button type="submit" class="btn btn-primary ms-1">{% if pk %}Update{% else %}Add{% endif %}</button>
+                <button type="submit" class="btn btn-primary ms-1">Update</button>
             </div>
         </form>
     </div>

@@ -3,6 +3,9 @@ from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
 from allauth.account.utils import user_field
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth.models import Permission
+from PIL import Image
+import os
+from my_project.settings import MEDIA_URL
 
 
 def common_as_div(self):
@@ -70,3 +73,14 @@ def is_authorized(groups=[], permissions=[]):
         return wrapper
 
     return decorator
+
+
+def image_to_thumbnail(form, field_name, file_path):
+    thumbnail_size = (100, 100)
+    image = Image.open(form.files[field_name])
+    image.thumbnail(thumbnail_size)
+
+    full_file_path = os.path.join(MEDIA_URL, file_path)
+    directory = os.path.dirname(full_file_path)
+    os.makedirs(directory, exist_ok=True)
+    image.save(full_file_path)

@@ -21,12 +21,10 @@ class AuditLogMiddleware:
         user = user if user.id else None
         method = request.method
         path = request.path
-        headers = json.dumps(dict(request.headers))
         params = json.dumps(dict(request.GET))
-        body = json.dumps(request.body.decode('utf-8'))
 
         if self.is_valid_path(path):
-            obj = {'user': user, 'method': method, 'path': path, 'headers': headers, 'params': params, 'body': body}
+            obj = {'user': user, 'method': method, 'path': path, 'params': params}
             AuditLog.objects.create(**obj)
 
         response = self.get_response(request)
