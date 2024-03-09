@@ -5,4 +5,4 @@ from .account.password_reset_key import CustomPasswordResetKeyForm
 from .account.reauthenticate import CustomReauthenticateForm
 from .mfa.activate_totp import CustomActivateTOTPForm
 from .mfa.authentication import CustomAuthenticateForm
-from .profile import ProfileForm
+from .profile import ProfilePicForm, ProofForm, DescriptionForm

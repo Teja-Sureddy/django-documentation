@@ -1,16 +1,16 @@
 from django.views import View
 from django.http import HttpResponseForbidden, HttpResponse, FileResponse, HttpResponseNotFound
-from my_project import settings
+from my_project.settings import MEDIA_URL
 import os
 import mimetypes
 
 
 class AccessFileView(View):
-    def get(self, request, directory, user_id, filename):
-        if request.user.id != user_id:
+    def get(self, request, filename, directory='public', user_id=''):
+        if request.user.id != user_id and directory != 'public':
             return HttpResponseForbidden("You do not have permission.")
 
-        file_path = os.path.join(settings.MEDIA_ROOT, f'{directory}/{user_id}/{filename}')
+        file_path = os.path.join(MEDIA_URL, f'{directory}/{user_id}/{filename}'.replace('//', '/'))
         content_type, _ = mimetypes.guess_type(file_path)
         if not content_type:
             content_type = 'application/octet-stream'

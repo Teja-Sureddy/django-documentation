@@ -5,24 +5,63 @@
 {% block title %}{{title}} - My Project{% endblock title %}
 
 {% block content %}
-<div class="card table-card">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <div class="d-flex align-items-center">
-            {% include 'menu.html' %}
-            <h2 class="text-uppercase m-0 title">{{title}}</h2>
+<div class="card table-card bg-transparent shadow-none">
+    <div class="row w-100 h-100vh align-items-center">
+        <div class="col-md-8 col-xl-6 mx-auto w-768">
+            <div class="card p-4 py-5">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div class="d-flex align-items-center">
+                        {% include 'menu.html' %}
+                        <h2 class="text-uppercase m-0 title">{{title}}</h2>
+                    </div>
+                </div>
+
+                <!-- Profile -->
+                <form method="post" enctype="multipart/form-data" hx-post="{% url 'users:profile' %}?type=profile_pic"
+                      hx-trigger="change" hx-target="#body">
+                    {% csrf_token %}
+                    {{ profile_form.as_div|safe }}
+                </form>
+
+                <!--  Description  -->
+                {% if profile.description %}
+                <p>{{profile.description}}</p>
+                {% else %}
+                --
+                {% endif %}
+                <a href="#" data-bs-toggle="modal" data-bs-target="#descriptionModel">Edit</a>
+
+                <!--  Proof  -->
+                <form method="post" enctype="multipart/form-data" hx-post="{% url 'users:profile' %}?type=proof"
+                      hx-trigger="change" hx-target="#body">
+                    {% csrf_token %}
+                    {{ proof_form.as_div|safe }}
+                </form>
+            </div>
         </div>
     </div>
-
     {% include "components/messages.html" with messages=messages class='table-messages' %}
+</div>
 
-    <div class="data-table form-table">
-        <form method="post" class="row" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form.as_div|safe }}
-            <div class="form-submit d-flex justify-content-end align-items-center">
-                <button type="submit" class="btn btn-primary ms-1">Update</button>
+<!-- description -->
+<div class="modal fade" id="descriptionModel" tabindex="-1" aria-labelledby="descriptionModelLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="descriptionModelLabel">Description</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-        </form>
+            <div class="modal-body">
+                <form method="post" class="row" hx-post="{% url 'users:profile' %}?type=description"
+                      hx-trigger="submit" hx-target="#body">
+                    {% csrf_token %}
+                    {{ description_form.as_div|safe }}
+                    <div class="d-flex justify-content-end align-items-center">
+                        <button type="submit" class="btn btn-primary ms-1">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock content %}

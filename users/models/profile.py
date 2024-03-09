@@ -22,13 +22,13 @@ def get_profile_thumb_path(instance, filename):
 
 class ProfileModel(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    proof = models.FileField(upload_to=get_proof_path)
-    profile_pic = models.ImageField(upload_to=get_profile_pic_path)
-    profile_thumb = models.ImageField(upload_to=get_profile_thumb_path)
+    proof = models.FileField(upload_to=get_proof_path, null=True)
+    profile_pic = models.ImageField(upload_to=get_profile_pic_path, null=True)
+    profile_thumb = models.ImageField(upload_to=get_profile_thumb_path, null=True)
     # description contains all params
     description = models.TextField(
         blank=False,
-        null=False,
+        null=True,
         default='',
         validators=[],
         help_text='Enter a description.',
