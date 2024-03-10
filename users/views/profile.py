@@ -38,10 +38,19 @@ class ProfileView(View):
             messages.success(request, 'Profile updated.')
             return HttpResponseClientRedirect(reverse('users:profile'))
 
+        self.send_error_message(form)
         context = self.get_context(form, form_type)
-        messages.error(request, 'Error updating profile..')
         response = render(self.request, 'profile.html', context)
         return push_url(response, request.path)
+
+    def send_error_message(self, form):
+        message = 'Error updating profile..'
+        if form.errors:
+            for field, errors in form.errors.as_data().items():
+                if errors:
+                    message = errors[0].message
+                    break
+        messages.error(self.request, message)
 
     def get_context(self, form=None, form_type=None):
         profile = self.get_profile()

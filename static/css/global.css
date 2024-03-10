@@ -171,6 +171,10 @@ a:focus {
     height: 100vh;
 }
 
+.h-150{
+    height: 150px !important;
+}
+
 .row{
     --bs-gutter-x: 0 !important;
 }
@@ -185,8 +189,13 @@ input[type="checkbox"] {
     height: 16px !important;
 }
 
-.w-768{
+.mw-768{
     max-width: 768px;
+}
+
+.w-h-150{
+    width: 150px;
+    height: 150px
 }
 
 /* menu */
@@ -198,6 +207,10 @@ input[type="checkbox"] {
 
 .menu-bar .nav-link:hover, .menu-bar .nav-link:focus{
     background: #f5f7ff;
+}
+
+.dropdown-item:focus, .dropdown-item:hover{
+    background-color: #eff0ff !important;
 }
 
 /* select2 */
@@ -381,4 +394,9 @@ input[type="checkbox"] {
 
 .social-link:hover, .social-link:focus{
     box-shadow: 0 0 10px 0 rgb(114 124 245 / 25%) !important;
+}
+
+/* Profile */
+.profile-pic{
+    border: 3px dotted #7e87f5
 }

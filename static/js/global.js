@@ -1,5 +1,6 @@
 document.body.addEventListener('htmx:load', function() {
     run_select2()
+    hideMessages()
 })
 
 // Clear all Filters

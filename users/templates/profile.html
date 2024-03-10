@@ -5,33 +5,49 @@
 {% block title %}{{title}} - My Project{% endblock title %}
 
 {% block content %}
-<div class="card table-card bg-transparent shadow-none">
-    <div class="row w-100 h-100vh align-items-center">
-        <div class="col-md-8 col-xl-6 mx-auto w-768">
-            <div class="card p-4 py-5">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <div class="d-flex align-items-center">
-                        {% include 'menu.html' %}
-                        <h2 class="text-uppercase m-0 title">{{title}}</h2>
-                    </div>
-                </div>
+<div class="card table-card">
 
-                <!-- Profile -->
-                <form method="post" enctype="multipart/form-data" hx-post="{% url 'users:profile' %}?type=profile_pic"
-                      hx-trigger="change" hx-target="#body">
-                    {% csrf_token %}
-                    {{ profile_form.as_div|safe }}
-                </form>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="d-flex align-items-center">
+            {% include 'menu.html' %}
+            <h2 class="text-uppercase m-0 title">{{title}}</h2>
+        </div>
+    </div>
 
-                <!--  Description  -->
-                {% if profile.description %}
-                <p>{{profile.description}}</p>
-                {% else %}
-                --
-                {% endif %}
-                <a href="#" data-bs-toggle="modal" data-bs-target="#descriptionModel">Edit</a>
+    <div class="data-table form-table mb-3">
+        <!-- Profile Pic -->
+        <form method="post" enctype="multipart/form-data" hx-post="{% url 'users:profile' %}?type=profile_pic"
+              hx-trigger="change" hx-target="#body" class="text-center">
+            {% csrf_token %}
+            {{ profile_form.as_div|safe }}
+            <p class="fs-125 text-black mb-0 text-capitalize mt-2 fw-bolder">{{user.name}}</p>
+        </form>
 
-                <!--  Proof  -->
+        <!--  Description  -->
+        <div class="col col-md-8 col-lg-6 mx-auto">
+            <div class="mt-3">
+                <label class="fs-8 fw-bolder mb-0 text-uppercase">Email:</label>
+                <p class="fs-9 text-secondary mb-0">{{user.email}}</p>
+            </div>
+
+            <div class="mt-3">
+                <label class="fs-8 fw-bolder mb-0 text-uppercase">Phone:</label>
+                <p class="fs-9 text-secondary mb-0">{{user.phone}}</p>
+            </div>
+
+            <div class="mt-3">
+                <label class="fs-8 fw-bolder mb-0 text-uppercase">Description:
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#descriptionModel" class="ms-1">
+                        <i class="bi bi-pencil-square"></i></a>
+                </label>
+                <p class="fs-9 text-secondary mb-0">
+                    {% if profile.description %}{{profile.description}}{% else %}--{% endif %}
+                </p>
+            </div>
+
+            <!--  Proof  -->
+            <div class="mt-3">
+                <label class="fs-8 fw-bolder mb-0 text-uppercase">Proof:</label>
                 <form method="post" enctype="multipart/form-data" hx-post="{% url 'users:profile' %}?type=proof"
                       hx-trigger="change" hx-target="#body">
                     {% csrf_token %}
@@ -51,7 +67,7 @@
                 <h5 class="modal-title" id="descriptionModelLabel">Description</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body pb-4">
                 <form method="post" class="row" hx-post="{% url 'users:profile' %}?type=description"
                       hx-trigger="submit" hx-target="#body">
                     {% csrf_token %}

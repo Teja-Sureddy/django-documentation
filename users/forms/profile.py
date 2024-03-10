@@ -1,4 +1,4 @@
-from django.forms import ModelForm
+from django.forms import ModelForm, Textarea
 from users.models import ProfileModel
 from django.core.exceptions import ValidationError
 from users.utils import common_as_div
@@ -25,9 +25,9 @@ class ProfilePicForm(ModelForm):
         html = ''
         for field in self:
             html += f'''
-                <div class="form-group">
+                <div class="w-h-150 mx-auto">
                     <label for="{field.id_for_label}">
-                        <img src="{profile_src}" width="100px" alt="Profile Picture">
+                        <img src="{profile_src}" width="150px" alt="Profile Picture" class="rounded-circle p-1 profile-pic">
                     </label>
                     <div class="d-none">{field.as_widget()}</div>
                 </div>
@@ -56,10 +56,16 @@ class ProofForm(ModelForm):
         html = ''
         for field in self:
             html += f'''
-                <div class="form-group">
-                    { f'<a href="{proof_href}" target="_blank">Proof</a>' if proof_href else '' }
-                    <label for="{field.id_for_label}">Upload</label>
-                    <div class="d-none">{field.as_widget()}</div>
+                <div class="d-flex flex-row align-items-center fs-9">
+                    <div class="me-2">
+                        {f'<a href="{proof_href}" target="_blank">Preview</a>' if proof_href else 'No Proof Found'}
+                    </div>
+                    <div>
+                        <label for="{field.id_for_label}">
+                            <a class="btn btn-primary fs-9 p-2 text-white"><i class="bi bi-cloud-arrow-up-fill"></i></a>
+                        </label>
+                        <div class="d-none">{field.as_widget()}</div>
+                    </div>
                 </div>
             '''
         return html
@@ -69,6 +75,8 @@ class DescriptionForm(ModelForm):
     class Meta:
         model = ProfileModel
         fields = ['description']
+        labels = {'description': 'Description'}
+        widgets = {'description': Textarea(attrs={'class': 'h-150', 'placeholder': 'Enter your description here'})}
 
     def as_div(self):
         return common_as_div(self)

@@ -39,7 +39,7 @@ def common_as_div(self):
         errors += f'{error}' if field == '__all__' else ''
     errors += '</div>'
 
-    html += errors
+    html += errors if self.errors else ''
     return html
 
 
