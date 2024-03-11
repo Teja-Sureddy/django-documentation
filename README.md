@@ -1,11 +1,21 @@
 # Django Documentation
 
-|                  |                     |
-|------------------|---------------------|
-| **OS**           | Windows             |
-| **DB Name**      | my_db               |
-| **Project Name** | my_project          |
-| **App Names**    | `users` `dashboard` |
+|                    |            |
+|--------------------|------------|
+| **OS**             | Windows    |
+| **DB Name**        | my_db      |
+| **Project Name**   | my_project |
+| **Apps Directory** | my_apps    |
+
+
+## Setup
+```
+python manage.py makemigrations
+python manage.py migrate
+python manage.py add_users
+python manage.py add_data
+```
+<hr>
 
 
 ## Table of Contents
@@ -18,19 +28,16 @@
 - [Run the migrations](#run-the-migrations)
 
 
-<hr>
-
-
 ## Installation
 
-Download & install the latest version of `python` from  [this](https://www.python.org/downloads/windows/)
+Download & install the latest version of `python` from  [link](https://www.python.org/downloads/windows/)
 and upgrade the `pip`:
 
 ```sh
 python -m pip install --upgrade pip
 ```
 
-Download & install the latest version of `postgres` from [this](https://www.postgresql.org/download/windows/).
+Download & install the latest version of `postgres` from [link](https://www.postgresql.org/download/windows/).
 
 Install django globally:
 
@@ -74,7 +81,7 @@ Add `'users', 'dashboard'` to the `INSTALLED_APPS` in [settings](my_project/sett
 
 ## Configure python interpreter
 
-You can configure Python interpreter in your IDE or `command line`:
+You can configure Python interpreter from your IDE or `command line`:
 ```sh
 python -m venv venv
 .\venv\Scripts\activate
@@ -114,62 +121,51 @@ python manage.py makemigrations
 python manage.py migrate
 ```
 
-To un apply migrations:
+To remove migrations:
 
 ```
 python manage.py showmigrations
 python manage.py migrate <app_name> zero
 ```
 
-To see what SQL statements that migration would execute:
+
+## Other Commands
+
 ```
+# To see what SQL statements that migration would execute:
 python manage.py sqlmigrate <app_name> <migration_name>
-```
 
-# Application
+# To list all models based on your database
+python manage.py inspectdb
 
-## Table of Contents
-
-- [CRUD](#crud)
-- [Shell](#shell)
-- [Django admin](#djando-admin)
-- [Debugger](#debugger)
-- [Packaging and using your app](#packaging-and-using-your-app)
-
-
-## CRUD
-
-- Design models as per the [models](dashboard/views/data.py) and run the [migrations](#run-the-migrations).
-- Run the [management commands](dashboard/management/commands/add_data.py) to insert dummy data.
-    ```s
-    python manage.py add_users
-    python manage.py add_data
-    ```
-- See basic operations from [view](dashboard/views/data.py) file.
-
-
-## Shell
-
-```sh 
 python manage.py shell
-```
 
-
-## Djando admin
-
-Create a user who can login to the admin site:
-
-```sh
 python manage.py createsuperuser
 ```
+<hr>
 
-Register the models for the dashboard app in [admin](dashboard/admin.py) file to do the CURD operations from the admin panel.
+## Features
+### Views
+ - Function-Based View
+ - [Class-Based View](my_apps/users/views/profile.py)
+ - [Class-Based ListView](my_apps/dashboard/views/data.py)
+ - Class-Based TemplateView
 
-## Debugger
 
-Follow [this](https://django-debug-toolbar.readthedocs.io/en/latest/installation.html), and it works for the templates containing HTML tags.
+### Others
+ - [Middleware](my_apps/users/middleware.py)
+ - [Authentication](my_project/urls.py)
+ - [Groups & Permissions](my_apps/users/utils.py)
+ - [Get & Delete Data](my_apps/dashboard/views/data.py)
+ - [Post & Put Data](my_apps/dashboard/views/data_modify.py)
+ - [Dynamic Form Fields](my_apps/dashboard/forms/full_data.py)
+ - [File Manager Access](my_apps/users/views/access_file.py)
+ - [File Upload](my_apps/users/views/profile.py)
 
-## Packaging and using your app
 
-Follow [this](https://docs.djangoproject.com/en/5.0/intro/reusable-apps/#packaging-your-app).
 
+### 3rd Party Packages
+ - django-allauth, django-allauth[mfa]
+   - Authentication - It provides username/email password-based, and OAuth-based authentication with MFA.
+ - Pillow
+   - Image processing - It can open, display, resize, crop, rotate, apply filters, and convert formats for images.

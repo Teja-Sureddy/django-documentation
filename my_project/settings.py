@@ -55,8 +55,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     'allauth.mfa',
     # custom
-    'dashboard',
-    'users',
+    'my_apps.dashboard',
+    'my_apps.users',
 ]
 
 MIDDLEWARE = [
@@ -70,7 +70,7 @@ MIDDLEWARE = [
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django_htmx.middleware.HtmxMiddleware',
     'allauth.account.middleware.AccountMiddleware',
-    'users.middleware.AuditLogMiddleware',
+    'my_apps.users.middleware.AuditLogMiddleware',
 ]
 
 ROOT_URLCONF = 'my_project.urls'
@@ -166,18 +166,18 @@ AUTHENTICATION_BACKENDS = [
 LOGIN_URL = '/user/login/'
 LOGIN_REDIRECT_URL = '/dashboard/data/'
 ACCOUNT_FORMS = {
-    'signup': 'users.forms.CustomSignupForm',
-    'login': 'users.forms.CustomLoginForm',
-    'reset_password': 'users.forms.CustomPasswordResetForm',
-    'reset_password_from_key': 'users.forms.CustomPasswordResetKeyForm',
-    'reauthenticate': 'users.forms.CustomReauthenticateForm',
+    'signup': 'my_apps.users.forms.CustomSignupForm',
+    'login': 'my_apps.users.forms.CustomLoginForm',
+    'reset_password': 'my_apps.users.forms.CustomPasswordResetForm',
+    'reset_password_from_key': 'my_apps.users.forms.CustomPasswordResetKeyForm',
+    'reauthenticate': 'my_apps.users.forms.CustomReauthenticateForm',
 }
 MFA_FORMS = {
-    'activate_totp': 'users.forms.CustomActivateTOTPForm',
-    'authenticate': 'users.forms.CustomAuthenticateForm',
-    'reauthenticate': 'users.forms.CustomAuthenticateForm',
+    'activate_totp': 'my_apps.users.forms.CustomActivateTOTPForm',
+    'authenticate': 'my_apps.users.forms.CustomAuthenticateForm',
+    'reauthenticate': 'my_apps.users.forms.CustomAuthenticateForm',
 }
-SOCIALACCOUNT_ADAPTER = 'users.utils.CustomSocialAccountAdapter'
+SOCIALACCOUNT_ADAPTER = 'my_apps.users.utils.CustomSocialAccountAdapter'
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
