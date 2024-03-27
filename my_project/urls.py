@@ -62,7 +62,7 @@ urlpatterns = [
     path('', include('my_apps.users.urls')),
     path('user/', include(auth_urlpatterns + social_auth_urlpatterns + mfa_urlpatterns)),
     path('dashboard/', include('my_apps.dashboard.urls')),
-    path('rest/v1/', include('my_apps.rest.urls')),
+    path('api/', include('my_apps.rest.urls')),
     path('admin/', admin.site.urls),
     path("__debug__/", include('debug_toolbar.urls')),
 ]

@@ -6,8 +6,8 @@ import mimetypes
 
 
 class AccessFileView(View):
-    def get(self, request, filename, directory='public', user_id=''):
-        if request.user.id != user_id and directory != 'public':
+    def get(self, request, filename, directory, user_id=''):
+        if request.user.id != user_id and directory not in ('public', 'temp'):
             return HttpResponseForbidden("You do not have permission.")
 
         file_path = os.path.join(MEDIA_URL, f'{directory}/{user_id}/{filename}'.replace('//', '/'))

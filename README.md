@@ -161,6 +161,7 @@ python manage.py createsuperuser
  - [Dynamic Form Fields](my_apps/dashboard/forms/full_data.py)
  - [File Manager Access](my_apps/users/views/access_file.py)
  - [File Upload](my_apps/users/views/profile.py)
+ - [DRF](my_apps/rest/README.md)
 
 
 
