@@ -1,3 +1,8 @@
+"""
+A pipeline is a series of middlewares that process a request and response in a sequential manner.
+
+Middleware allows you to alter the processing of requests and responses.
+"""
 from rest_framework.authentication import TokenAuthentication
 import json
 from my_apps.users.models import AuditLog

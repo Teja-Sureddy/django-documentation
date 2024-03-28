@@ -153,7 +153,9 @@ python manage.py createsuperuser
 
 
 ### Others
- - [Middleware](my_apps/users/middleware.py)
+ - [Middleware](my_apps/middleware.py)
+ - [Adapter](my_apps/adapter.py)
+ - [backend](my_apps/backend.py)
  - [Authentication](my_project/urls.py)
  - [Groups & Permissions](my_apps/users/utils.py)
  - [Get & Delete Data](my_apps/dashboard/views/data.py)

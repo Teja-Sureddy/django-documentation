@@ -73,7 +73,7 @@ MIDDLEWARE = [
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django_htmx.middleware.HtmxMiddleware',
     'allauth.account.middleware.AccountMiddleware',
-    'my_apps.users.middleware.AuditLogMiddleware',
+    'my_apps.middleware.AuditLogMiddleware',
 ]
 
 ROOT_URLCONF = 'my_project.urls'
@@ -164,7 +164,8 @@ PHONENUMBER_DEFAULT_REGION = 'IN'
 # all-auth
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend',
+    # 'allauth.account.auth_backends.AuthenticationBackend',
+    'my_apps.backend.MyCustomAuthBackend'
 ]
 LOGIN_URL = '/user/login/'
 LOGIN_REDIRECT_URL = '/dashboard/data/'
