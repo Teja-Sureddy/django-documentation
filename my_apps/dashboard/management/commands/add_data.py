@@ -1,7 +1,7 @@
 import random
 from django.core.management.base import BaseCommand
 from django.utils import timezone
-from dashboard.models import DataModel, ColorModel, HairModel, FullDataModel
+from my_apps.dashboard.models import DataModel, ColorModel, HairModel, FullDataModel
 import string
 import ipaddress
 from datetime import timedelta

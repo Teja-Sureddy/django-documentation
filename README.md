@@ -142,8 +142,9 @@ python manage.py shell
 
 python manage.py createsuperuser
 ```
-<hr>
 
+
+---
 ## Features
 ### Views
  - Function-Based View
@@ -164,7 +165,14 @@ python manage.py createsuperuser
  - [File Manager Access](my_apps/users/views/access_file.py)
  - [File Upload](my_apps/users/views/profile.py)
  - [DRF](my_apps/rest/README.md)
+ - [WSS](#WSS)
 
+
+### WSS
+ - Install `channels` and `channels-redis` (version 3) in the project.
+ - Install `redis` on windows by following https://developer.redis.com/create/windows/.
+ - In wsl, run `sudo service redis-server start`.
+ - [Code](my_apps/notification/consumers.py).
 
 
 ### 3rd Party Packages

@@ -56,10 +56,13 @@ INSTALLED_APPS = [
     'allauth.mfa',
     'rest_framework',
     'rest_framework.authtoken',
+    'notifications',
+    'channels',
     # custom
     'my_apps.dashboard',
     'my_apps.users',
     'my_apps.rest',
+    'my_apps.notification',
 ]
 
 MIDDLEWARE = [
@@ -210,3 +213,16 @@ EMAIL_PORT = env.int('EMAIL_PORT')
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = env('EMAIL_USER')
 EMAIL_HOST_PASSWORD = env('EMAIL_PASSWORD')
+
+# channels
+ASGI_APPLICATION = 'my_project.asgi.application'
+
+# channels redis
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [('localhost', 6379)],
+        },
+    },
+}

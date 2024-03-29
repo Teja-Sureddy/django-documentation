@@ -64,5 +64,5 @@ urlpatterns = [
     path('dashboard/', include('my_apps.dashboard.urls')),
     path('api/', include('my_apps.rest.urls')),
     path('admin/', admin.site.urls),
-    path("__debug__/", include('debug_toolbar.urls')),
+    path('__debug__/', include('debug_toolbar.urls')),
 ]
