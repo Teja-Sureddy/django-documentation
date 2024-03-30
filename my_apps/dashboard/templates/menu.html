@@ -10,8 +10,15 @@
                         <li><a class="dropdown-item" href="{% url 'dashboard:data' %}">Home</a></li>
                         <li><a class="dropdown-item" href="{% url 'mfa_index' %}">2FA</a></li>
                         <li><a class="dropdown-item" href="{% url 'users:profile' %}">Profile</a></li>
+
                         <li><hr class="dropdown-divider my-1"></li>
                         <li><a class="dropdown-item text-danger" href="{% url 'account_logout' %}">Logout</a></li>
+
+                        <li><hr class="dropdown-divider my-1"></li>
+                        <li hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+                            <a class="dropdown-item" role="button" tabindex="0"
+                               hx-post="{% url 'background:bg_threading' %}" hx-trigger="click">BG Threading</a>
+                        </li>
                     </ul>
                 </li>
             </ul>
