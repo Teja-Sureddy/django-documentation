@@ -1,46 +1,45 @@
+{% load static %}
+
 <nav class="notification-bar navbar navbar-expand-lg p-0">
-    <div class="container-fluid p-0 me-1">
-            <ul class="menu-bar navbar-nav">
-                <li class="nav-item dropdown">
-                    <a class="nav-link px-2 py-0" href="#" id="navbarDropdown" role="button"
-                       data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bi bi-bell fs-125"></i>
-                    </a>
-                    <ul class="dropdown-menu px-3 py-4 position-absolute" aria-labelledby="navbarDropdown">
-                        <h3 class="pb-3 px-1">Notifications</h3>
-                        <div id="notifications">
-                            <p class="text-center text-primary mt-4 notifications-na">No notifications found.</p>
-                        </div>
-                    </ul>
-                </li>
-            </ul>
+    <div class="container-fluid p-0 me-2">
+        <ul class="menu-bar navbar-nav">
+            <li class="nav-item dropdown">
+                <a class="nav-link px-2 py-0" href="#" id="notificationBarDropdown" role="button"
+                   data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-bell fs-125"></i>
+                </a>
+                <ul class="dropdown-menu px-3 py-4 position-absolute" aria-labelledby="notificationBarDropdown">
+                    <h3 class="pb-3 px-1">Notifications</h3>
+                    {% csrf_token %}
+                    <div id="notifications">
+                        <p class="text-center text-primary mt-4 notifications-na">No notifications found.</p>
+                    </div>
+                </ul>
+                <div class="notify-badge position-absolute bg-danger text-white px-1 rounded" data-count="0">0</div>
+            </li>
+        </ul>
     </div>
 </nav>
 
-<script>
-    const notificationSocket = new WebSocket(
-        'ws://' + window.location.host + '/ws/notification/'
-    );
+<div class="modal fade" id="notificationModal" tabindex="-1" aria-labelledby="notificationModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="notificationModalLabel">Notification</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h4 class="m-0"></h4>
+                <span></span>
+                <p class="mt-2"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-    notificationSocket.onopen = function(event){
-        console.log('Connected to ws.')
-    }
 
-    notificationSocket.onmessage = function (e) {
-        const data = JSON.parse(e.data);
-
-        var notificationsNa = document.querySelector('.notifications-na');
-        if (notificationsNa) notificationsNa.remove();
-
-        var listItem = document.createElement("li");
-        listItem.innerHTML = '<a href="#"><h4>' + data.title + '</h4><p>' + data.description + '</p><span>' + data.timesince + ' ago</span></a>';
-
-        var parentUl = document.querySelector('#notifications');
-        parentUl.prepend(listItem);
-    }
-
-    notificationSocket.onclose = function (e) {
-        console.log(e)
-    }
-
-</script>
+<script src="{% static 'js/notification.js' %}"></script>

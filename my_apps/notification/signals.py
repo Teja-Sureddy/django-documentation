@@ -28,5 +28,8 @@ def notify_instance_to_data(instance):
     return {
         'title': instance.verb,
         'description': instance.description,
-        'timesince': timesince(instance.timestamp)
+        'timesince': timesince(instance.timestamp),
+        'slug': instance.slug,
+        'unread': instance.unread,
+        'public': instance.public
     }

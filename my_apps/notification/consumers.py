@@ -39,7 +39,7 @@ class NotificationConsumer(AsyncJsonWebsocketConsumer):
             queryset = await sync_to_async(Notification.objects.filter)(public=True)
 
         queryset = await sync_to_async(queryset.order_by)('-timestamp')
-        queryset = queryset[:10]
+        # queryset = queryset[:10]
 
         notifications = await sync_to_async(list)(queryset)
         for instance in reversed(notifications):

@@ -63,6 +63,7 @@ urlpatterns = [
     path('user/', include(auth_urlpatterns + social_auth_urlpatterns + mfa_urlpatterns)),
     path('dashboard/', include('my_apps.dashboard.urls')),
     path('api/', include('my_apps.rest.urls')),
+    path('notification/', include('my_apps.notification.urls')),
     path('admin/', admin.site.urls),
     path('__debug__/', include('debug_toolbar.urls')),
 ]
