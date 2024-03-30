@@ -169,10 +169,16 @@ python manage.py createsuperuser
 
 
 ### WSS
- - Install `channels` and `channels-redis` (version 3) in the project.
+
+ - Install `channels`(v3) and configure [asgi](my_project/asgi.py) and [settings](my_project/settings.py) files.
+ - Follow [consumer](my_apps/notification/consumers.py) and [js](static/js/notification.js).
+
+With Broker like redis:
+
+ - Follow above.
+ - Install `channels-redis`(v3) in the project.
  - Install `redis` on windows by following https://developer.redis.com/create/windows/.
  - In wsl, run `sudo service redis-server start`.
- - [Code](my_apps/notification/consumers.py).
 
 
 ### 3rd Party Packages
