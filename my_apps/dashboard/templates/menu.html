@@ -16,8 +16,12 @@
 
                         <li><hr class="dropdown-divider my-1"></li>
                         <li hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
-                            <a class="dropdown-item" role="button" tabindex="0"
-                               hx-post="{% url 'background:bg_threading' %}" hx-trigger="click">BG Threading</a>
+                            <a class="dropdown-item" role="button" tabindex="0" hx-swap="none"
+                               hx-post="{% url 'background:threading' %}" hx-trigger="click">Threading</a>
+                        </li>
+                        <li hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+                            <a class="dropdown-item" role="button" tabindex="0" hx-swap="none"
+                               hx-post="{% url 'background:django_q' %}" hx-trigger="click">Django Q</a>
                         </li>
                     </ul>
                 </li>

@@ -1,0 +1,24 @@
+from django.views import View
+from django.http import JsonResponse
+import time
+from django_q.tasks import async_task
+
+
+def my_background_task(*args, **kwargs):
+    print(args, kwargs)
+    for i in range(1, 6):
+        print(i)
+        time.sleep(1)
+
+
+class DjangoQView(View):
+    """
+    django-q
+
+    It runs the tasks in qcluster, `python manage.py qcluster` must be running.
+    If the qcluster is down and then restarted, The pending tasks gets triggered automatically (stored in db).
+    Although It's a queue, It can run simultaneously but priority goes to first.
+    """
+    def post(self, request):
+        async_task(my_background_task, 1, 2, x=3)
+        return JsonResponse({'success': True}, status=200)

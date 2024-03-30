@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'notifications',
     'channels',
+    'django_q',
     # custom
     'my_apps.dashboard',
     'my_apps.users',
@@ -230,4 +231,15 @@ CHANNEL_LAYERS = {
         #     'hosts': [('localhost', 6379)],
         # },
     },
+}
+
+# django-q
+Q_CLUSTER = {
+    'name': 'DjangoORM',
+    'workers': 4,
+    'timeout': 90,
+    'retry': 90,
+    'queue_limit': 100,
+    'bulk': 10,
+    'orm': 'default',
 }
