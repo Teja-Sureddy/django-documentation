@@ -1,3 +1,3 @@
 """
-Django REST Framework
+Django REST Framework - See README.md
 """

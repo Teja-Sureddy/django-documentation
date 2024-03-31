@@ -15,5 +15,5 @@ Pillow==10.2.0  # For image processing
 django-notifications-hq==1.8.3  # notifications
 channels==3.0.5  # wss
 # channels-redis==3.4.1  # wss
-celery==5.3.6  # background task
 django-q==1.3.9  # background task
+celery==5.3.6  # background task

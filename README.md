@@ -153,7 +153,7 @@ python manage.py createsuperuser
  - Class-Based TemplateView
 
 
-### Others
+### Table of Contents
  - [Middleware](my_apps/middleware.py)
  - [Adapter](my_apps/adapter.py)
  - [backend](my_apps/backend.py)
@@ -179,10 +179,3 @@ With Broker like redis:
  - Install `channels-redis`(v3) in the project.
  - Install `redis` on windows by following https://developer.redis.com/create/windows/.
  - In wsl, run `sudo service redis-server start`.
-
-
-### 3rd Party Packages
- - django-allauth, django-allauth[mfa]
-   - Authentication - It provides username/email password-based, and OAuth-based authentication with MFA.
- - Pillow
-   - Image processing - It can open, display, resize, crop, rotate, apply filters, and convert formats for images.

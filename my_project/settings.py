@@ -236,7 +236,7 @@ CHANNEL_LAYERS = {
 # django-q
 Q_CLUSTER = {
     'name': 'DjangoORM',
-    'workers': 4,
+    'workers': 4,  # Number of simultaneous tasks
     'timeout': 90,
     'retry': 90,
     'queue_limit': 100,

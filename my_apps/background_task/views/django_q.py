@@ -17,7 +17,7 @@ class DjangoQView(View):
 
     It runs the tasks in qcluster, `python manage.py qcluster` must be running.
     If the qcluster is down and then restarted, The pending tasks gets triggered automatically (stored in db).
-    Although It's a queue, It can run simultaneously but priority goes to first.
+    The number of simultaneous tasks that can be processed depends on the number of workers configured.
     """
     def post(self, request):
         async_task(my_background_task, 1, 2, x=3)
