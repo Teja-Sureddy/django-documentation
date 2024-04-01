@@ -166,6 +166,7 @@ python manage.py createsuperuser
  - [File Upload](my_apps/users/views/profile.py)
  - [DRF](my_apps/rest/README.md)
  - [WSS](#WSS)
+ - [Background task](my_apps/background_task/__init__.py)
 
 
 ### WSS

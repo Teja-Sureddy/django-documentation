@@ -23,6 +23,10 @@
                             <a class="dropdown-item" role="button" tabindex="0" hx-swap="none"
                                hx-post="{% url 'background:django_q' %}" hx-trigger="click">Django Q</a>
                         </li>
+                        <li hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+                            <a class="dropdown-item" role="button" tabindex="0" hx-swap="none"
+                               hx-post="{% url 'background:asyncio' %}" hx-trigger="click">Asyncio</a>
+                        </li>
                     </ul>
                 </li>
             </ul>
