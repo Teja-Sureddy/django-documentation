@@ -27,6 +27,15 @@
                             <a class="dropdown-item" role="button" tabindex="0" hx-swap="none"
                                hx-post="{% url 'background:asyncio' %}" hx-trigger="click">Asyncio</a>
                         </li>
+
+                        <li><hr class="dropdown-divider my-1"></li>
+                        <li>
+                            <a class="dropdown-item" role="button" tabindex="0"
+                               href="{% url 'pdf:generate_pdf' %}" target="_blank">GET PDF</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" role="button" tabindex="0">Email PDF</a>
+                        </li>
                     </ul>
                 </li>
             </ul>

@@ -65,6 +65,7 @@ urlpatterns = [
     path('api/', include('my_apps.rest.urls')),
     path('notification/', include('my_apps.notification.urls')),
     path('background/', include('my_apps.background_task.urls')),
+    path('pdf/', include('my_apps.pdf.urls')),
     path('admin/', admin.site.urls),
     path('__debug__/', include('debug_toolbar.urls')),
 ]
