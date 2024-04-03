@@ -243,3 +243,39 @@ Q_CLUSTER = {
     'bulk': 10,
     'orm': 'default',
 }
+
+# logging
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple',
+        },
+        'file': {
+            'level': 'INFO',
+            # use RotatingFileHandler or TimedRotatingFileHandler to get logs in multiple files.
+            'class': 'logging.FileHandler',
+            'filename': './logs/django.log',
+            'formatter': 'simple'
+        },
+    },
+    'formatters': {
+        'simple': {
+            'format': '%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+        },
+    },
+    "root": {
+        "handlers": ['console', 'file'],
+        "level": "INFO",
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console', 'file'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+    },
+}

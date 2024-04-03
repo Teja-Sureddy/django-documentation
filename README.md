@@ -180,3 +180,16 @@ With Broker like redis:
  - Install `channels-redis`(v3) in the project.
  - Install `redis` on windows by following https://developer.redis.com/create/windows/.
  - In wsl, run `sudo service redis-server start`.
+
+
+### Logging
+```
+import logging
+logger = logging.getLogger(__name__)
+
+logger.debug('This is a debug message')
+logger.info('This is an info message')
+logger.warning('This is a warning message')
+logger.error('This is an error message')
+logger.critical('This is a critical message')
+```
