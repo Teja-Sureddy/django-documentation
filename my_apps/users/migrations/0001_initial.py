@@ -36,7 +36,7 @@ class Migration(migrations.Migration):
             },
         ),
         migrations.CreateModel(
-            name='ProfileModel',
+            name='Profile',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('proof', models.FileField(null=True, upload_to=my_apps.users.models.profile.get_proof_path)),

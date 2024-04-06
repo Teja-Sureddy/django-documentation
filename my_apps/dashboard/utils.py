@@ -1,6 +1,6 @@
 import django_filters
 import django_tables2 as tables
-from my_apps.dashboard.models import FullDataModel
+from my_apps.dashboard.models import FullData
 from django.utils.html import format_html, escape
 from django.utils.safestring import mark_safe
 from datetime import datetime
@@ -25,7 +25,7 @@ def format_datetime(value):
 
 class FullDataTable(tables.Table):
     class Meta:
-        model = FullDataModel
+        model = FullData
         template_name = 'django_tables2/bootstrap4.html'
         attrs = {'class': 'table table-hover table-white mb-0'}
         exclude = ('id', 'json_data', 'data', 'color', 'hair')
@@ -144,7 +144,7 @@ class CustomRangeWidget(django_filters.widgets.RangeWidget):
 
 class FullDataFilter(django_filters.FilterSet):
     class Meta:
-        model = FullDataModel
+        model = FullData
         fields = {
             'data__name': ['icontains'],
             'data__age': ['range'],
@@ -174,7 +174,7 @@ class FullDataFilter(django_filters.FilterSet):
 
     hair_color = django_filters.ChoiceFilter(
         field_name='hair_color',
-        choices=FullDataModel.HairColor.choices,
+        choices=FullData.HairColor.choices,
         label='Hair Color',
         empty_label='Select hair color'
     )

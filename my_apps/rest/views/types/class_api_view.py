@@ -2,7 +2,7 @@
 Class based View.
 """
 from rest_framework.views import APIView
-from my_apps.rest.models import TempModel2, TempModel2Serializer
+from my_apps.rest.models import Temp2, Temp2Serializer
 from rest_framework.response import Response
 from rest_framework import status
 from django.http import Http404
@@ -22,19 +22,19 @@ class CustomAcceptHeaderVersioning(AcceptHeaderVersioning):
 
 
 class ClassApiView(APIView):
-    queryset = TempModel2.objects.all()
+    queryset = Temp2.objects.all()
     authentication_classes = [TokenAuthentication, SessionAuthentication]
     permission_classes = [IsAuthenticated]
     throttle_classes = [CustomUserRateThrottle]
     versioning_class = CustomAcceptHeaderVersioning
 
     def get(self, request, format=None):
-        queryset = TempModel2.objects.all()
-        serializer = TempModel2Serializer(queryset, many=True, context={'request': request})
+        queryset = Temp2.objects.all()
+        serializer = Temp2Serializer(queryset, many=True, context={'request': request})
         return Response(serializer.data)
 
     def post(self, request, format=None):
-        serializer = TempModel2Serializer(data=request.data, context={'request': request})
+        serializer = Temp2Serializer(data=request.data, context={'request': request})
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -47,18 +47,18 @@ class ClassApiPkView(APIView):
 
     def get_object(self, pk):
         try:
-            return TempModel2.objects.get(pk=pk)
-        except TempModel2.DoesNotExist:
+            return Temp2.objects.get(pk=pk)
+        except Temp2.DoesNotExist:
             raise Http404
 
     def get(self, request, pk, format=None):
         queryset = self.get_object(pk)
-        serializer = TempModel2Serializer(queryset, context={'request': request})
+        serializer = Temp2Serializer(queryset, context={'request': request})
         return Response(serializer.data)
 
     def put(self, request, pk, format=None):
         queryset = self.get_object(pk)
-        serializer = TempModel2Serializer(queryset, data=request.data, context={'request': request})
+        serializer = Temp2Serializer(queryset, data=request.data, context={'request': request})
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)

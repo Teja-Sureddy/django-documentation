@@ -1,7 +1,7 @@
 import random
 from django.core.management.base import BaseCommand
 from django.utils import timezone
-from my_apps.dashboard.models import DataModel, ColorModel, HairModel, FullDataModel
+from my_apps.dashboard.models import Data, Color, Hair, FullData
 import string
 import ipaddress
 from datetime import timedelta
@@ -29,16 +29,16 @@ def generate_random_duration():
 
 
 class Command(BaseCommand):
-    help = 'Inserts dummy data into DataModel, ColorModel, HairModel, and FullDataModel'
+    help = 'Inserts dummy data into Data, Color, Hair, and FullData'
 
     def handle(self, *args, **options):
-        # Insert dummy data into DataModel
+        # Insert dummy data into Data
         for _ in range(1000):
             rand = random.randint(1000, 9999)
-            existing_instance = DataModel.objects.filter(email=f'person_{rand}@example.com').first()
+            existing_instance = Data.objects.filter(email=f'person_{rand}@example.com').first()
 
             if existing_instance is None:
-                DataModel.objects.create(
+                Data.objects.create(
                     name=f'Person {rand}',
                     email=f'person_{rand}@example.com',
                     age=random.randint(10, 60),
@@ -48,34 +48,34 @@ class Command(BaseCommand):
                     ip_address=generate_random_ip(),
                     website=generate_random_website()
                 )
-        print('DataModel Done.')
+        print('Data Done.')
 
-        # Insert dummy data into ColorModel
+        # Insert dummy data into Color
         favorite_colors = ['Red', 'Blue', 'Green', 'Yellow', 'Purple']
         for _ in range(20):
             favorite_color = random.choice(favorite_colors)
-            ColorModel.objects.create(favorite_color=favorite_color)
-        print('ColorModel Done.')
+            Color.objects.create(favorite_color=favorite_color)
+        print('Color Done.')
 
-        # Insert dummy data into HairModel
+        # Insert dummy data into Hair
         for _ in range(200):
-            HairModel.objects.create(
+            Hair.objects.create(
                 is_hair_styled=random.choice([True, False]),
                 hair_length_cm=random.randint(20, 50),
                 hair_color_intensity=random.uniform(0.1, 3.0),
                 hair_shine_factor=random.uniform(0.1, 1.0),
                 hair_description=f'Dummy description {_}'
             )
-        print('HairModel Done.')
+        print('Hair Done.')
 
-        # Insert dummy data into FullDataModel
-        data_instances = DataModel.objects.all()
-        color_instances = ColorModel.objects.all()
-        hair_instances = HairModel.objects.all()
+        # Insert dummy data into FullData
+        data_instances = Data.objects.all()
+        color_instances = Color.objects.all()
+        hair_instances = Hair.objects.all()
 
         for _ in range(1000):
             data_instance = random.choice(data_instances)
-            existing_instance = FullDataModel.objects.filter(data=data_instance).first()
+            existing_instance = FullData.objects.filter(data=data_instance).first()
             data = {
                 "name": ''.join(random.choice(string.ascii_letters) for _ in range(10)),
                 "age": random.randint(18, 60),
@@ -84,13 +84,13 @@ class Command(BaseCommand):
             }
 
             if existing_instance is None:
-                FullDataModel.objects.create(
+                FullData.objects.create(
                     hair_color=random.choice(['BL', 'BR', 'BK', 'RD', 'OT']),
                     duration=str(generate_random_duration()),
                     json_data=data,
                     data=data_instance,
                     hair=random.choice(hair_instances)
                 ).color.set(random.sample(list(color_instances), random.randint(1, 3)))
-        print('FullDataModel Done.')
+        print('FullData Done.')
 
         self.stdout.write(self.style.SUCCESS('Successfully inserted dummy data.'))

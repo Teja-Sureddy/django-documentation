@@ -1,7 +1,7 @@
 """
 Generic Views (for models).
 """
-from my_apps.rest.models import TempModel, TempModelSerializer
+from my_apps.rest.models import Temp1, Temp1Serializer
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication
@@ -21,8 +21,8 @@ class CustomLimitOffsetPagination(LimitOffsetPagination):
 class ClassGenericsView(generics.ListCreateAPIView):
     authentication_classes = [TokenAuthentication, SessionAuthentication]
     permission_classes = [IsAuthenticated]
-    queryset = TempModel.objects.all()
-    serializer_class = TempModelSerializer
+    queryset = Temp1.objects.all()
+    serializer_class = Temp1Serializer
     filter_backends = [SearchFilter, OrderingFilter]
     search_fields = ['title', 'description', 'created_at']
     ordering_fields = '__all__'
@@ -39,8 +39,8 @@ class ClassGenericsView(generics.ListCreateAPIView):
 class ClassGenericsPkView(generics.RetrieveUpdateDestroyAPIView):
     authentication_classes = [TokenAuthentication, SessionAuthentication]
     permission_classes = [IsAuthenticated]
-    queryset = TempModel.objects.all()
-    serializer_class = TempModelSerializer
+    queryset = Temp1.objects.all()
+    serializer_class = Temp1Serializer
 
     # no need to mention the below methods unless there is a custom logic
     def get(self, request, *args, **kwargs):

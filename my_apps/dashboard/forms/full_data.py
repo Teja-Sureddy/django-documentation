@@ -1,5 +1,5 @@
 from django import forms
-from my_apps.dashboard.models import DataModel, FullDataModel
+from my_apps.dashboard.models import Data, FullData
 from dynamic_forms import DynamicFormMixin, DynamicField
 from my_apps.dashboard.utils import set_dropdown_attrs
 
@@ -11,14 +11,14 @@ HX_ATTRIBUTES = {
 
 class FullDataForm(DynamicFormMixin, forms.ModelForm):
     class Meta:
-        model = FullDataModel
+        model = FullData
         fields = ['name', 'email', 'age', 'gender', 'dob', 'tob', 'slug', 'website', 'ip_address',
                   'hair', 'hair_color', 'color', 'duration', 'json_data']
 
     name = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'placeholder': 'Enter your Name'}))
     email = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder': 'Enter your Email'}))
     age = forms.IntegerField(widget=forms.NumberInput(attrs={'placeholder': 'Enter your Age'}))
-    gender = forms.ChoiceField(choices=[('', 'Select gender'), ] + DataModel.GENDERS)
+    gender = forms.ChoiceField(choices=[('', 'Select gender'), ] + Data.GENDERS)
 
     dob = DynamicField(
         forms.DateField,
@@ -40,7 +40,7 @@ class FullDataForm(DynamicFormMixin, forms.ModelForm):
     def __init__(self, *args, pk=None, **kwargs):
         self.pk = pk
         super(FullDataForm, self).__init__(*args, **kwargs)
-        self.fields['hair_color'].choices = [('', 'Select hair color')] + FullDataModel.HairColor.choices
+        self.fields['hair_color'].choices = [('', 'Select hair color')] + FullData.HairColor.choices
         self.fields['duration'].widget.attrs['placeholder'] = 'Enter duration'
         self.fields['json_data'].widget.attrs['placeholder'] = 'Enter JSON'
 
@@ -64,12 +64,12 @@ class FullDataForm(DynamicFormMixin, forms.ModelForm):
         }
 
         if self.pk is not None:
-            full_data = FullDataModel.objects.get(pk=self.pk)
+            full_data = FullData.objects.get(pk=self.pk)
             data = full_data.data
             data.__dict__.update(**data_data)
             data.save()
         else:
-            data = DataModel.objects.create(**data_data)
+            data = Data.objects.create(**data_data)
 
         self.instance.pk = self.pk
         self.instance.data = data

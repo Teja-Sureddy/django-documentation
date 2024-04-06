@@ -2,7 +2,7 @@ from django.shortcuts import render, reverse
 from my_apps.users.forms import ProfilePicForm, ProofForm, DescriptionForm
 from django.views import View
 from django.contrib import messages
-from my_apps.users.models import ProfileModel
+from my_apps.users.models import Profile
 from my_apps.users.utils import image_to_thumbnail
 from my_apps.users.models.profile import get_profile_thumb_path
 from django_htmx.http import HttpResponseClientRedirect, push_url
@@ -66,7 +66,7 @@ class ProfileView(View):
 
     def get_profile(self):
         try:
-            profile = ProfileModel.objects.get(user=self.request.user)
-        except ProfileModel.DoesNotExist:
+            profile = Profile.objects.get(user=self.request.user)
+        except Profile.DoesNotExist:
             profile = None
         return profile

@@ -1,12 +1,12 @@
 from django.forms import ModelForm, Textarea
-from my_apps.users.models import ProfileModel
+from my_apps.users.models import Profile
 from django.core.exceptions import ValidationError
 from my_apps.users.utils import common_as_div
 
 
 class ProfilePicForm(ModelForm):
     class Meta:
-        model = ProfileModel
+        model = Profile
         fields = ['profile_pic']
 
     def clean_profile_pic(self):
@@ -37,7 +37,7 @@ class ProfilePicForm(ModelForm):
 
 class ProofForm(ModelForm):
     class Meta:
-        model = ProfileModel
+        model = Profile
         fields = ['proof']
 
     def clean_proof(self):
@@ -73,7 +73,7 @@ class ProofForm(ModelForm):
 
 class DescriptionForm(ModelForm):
     class Meta:
-        model = ProfileModel
+        model = Profile
         fields = ['description']
         labels = {'description': 'Description'}
         widgets = {'description': Textarea(attrs={'class': 'h-150', 'placeholder': 'Enter your description here'})}

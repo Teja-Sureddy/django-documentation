@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404
 from django_tables2 import SingleTableView, RequestConfig
 from django_filters.views import FilterView
-from my_apps.dashboard.models import FullDataModel
+from my_apps.dashboard.models import FullData
 from my_apps.dashboard.utils import FullDataTable, FullDataFilter
 from django.contrib import messages
 from django.http import JsonResponse
@@ -10,7 +10,7 @@ from my_apps.users.utils import is_authorized
 
 # This is similar to ListView
 class DataView(SingleTableView, FilterView):
-    model = FullDataModel
+    model = FullData
     table_class = FullDataTable
     template_name = 'data.html'
     filterset_class = FullDataFilter
@@ -22,7 +22,7 @@ class DataView(SingleTableView, FilterView):
 
     # # Custom filtering
     # def get_queryset(self):
-    #     return FullDataModel.objects.filter(
+    #     return FullData.objects.filter(
     #         data__name__startswith="Person",
     #         data__created_at__year=2024,
     #         data__age__gt=18,
@@ -46,7 +46,7 @@ class DataView(SingleTableView, FilterView):
     @is_authorized(permissions=['delete_data'])
     def delete(request, pk):
         if request.method == 'DELETE':
-            instance = get_object_or_404(FullDataModel, pk=pk)
+            instance = get_object_or_404(FullData, pk=pk)
             data = instance.data
             instance.delete()
             data.delete()

@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class HairModel(models.Model):
+class Hair(models.Model):
     is_hair_styled = models.BooleanField(default=False)
     hair_length_cm = models.IntegerField(default=0)
     hair_color_intensity = models.DecimalField(max_digits=5, decimal_places=2, default=0.0)

@@ -64,7 +64,7 @@ INSTALLED_APPS = [
     'my_apps.users',
     'my_apps.rest',
     'my_apps.notification',
-    'my_apps.background_task',
+    'my_apps.pdf',
 ]
 
 MIDDLEWARE = [

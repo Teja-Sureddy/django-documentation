@@ -3,7 +3,7 @@ from my_apps.dashboard.forms import FullDataForm
 from django.contrib import messages
 from django.views import View
 from django.shortcuts import render, get_object_or_404
-from my_apps.dashboard.models import FullDataModel
+from my_apps.dashboard.models import FullData
 from my_apps.users.utils import is_authorized
 
 
@@ -38,7 +38,7 @@ class DataModifyView(View):
 
     # Utils
     def get_full_data_form(self, pk):
-        instance = get_object_or_404(FullDataModel, pk=pk) if pk else None
+        instance = get_object_or_404(FullData, pk=pk) if pk else None
         if instance:
             return FullDataForm(instance=instance, initial=self.get_initials(instance), context={'request': self.request})
         return FullDataForm(context={'request': self.request})

@@ -4,7 +4,7 @@ import uuid
 from django.utils.text import slugify
 
 
-class DataModel(models.Model):
+class Data(models.Model):
     GENDERS = [("M", "Male"), ("F", "Female")]
 
     name = models.CharField(max_length=100)

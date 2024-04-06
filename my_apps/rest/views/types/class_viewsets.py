@@ -2,7 +2,7 @@
 Viewsets (highly customizable).
 """
 from rest_framework.viewsets import *
-from my_apps.rest.models import TempModel, TempModelSerializer
+from my_apps.rest.models import Temp1, Temp1Serializer
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import renderers
@@ -26,14 +26,14 @@ from django_filters.rest_framework import DjangoFilterBackend
 
 # class ClassViewset(ReadOnlyModelViewSet):
 #     # `list` and `retrieve`
-#     queryset = TempModel.objects.all()
-#     serializer_class = TempModelSerializer
+#     queryset = Temp1.objects.all()
+#     serializer_class = Temp1Serializer
 
 
 class ClassViewset(ModelViewSet):
     # `list`, `create`, `retrieve`, `update` and `destroy`
-    queryset = TempModel.objects.all()
-    serializer_class = TempModelSerializer
+    queryset = Temp1.objects.all()
+    serializer_class = Temp1Serializer
     authentication_classes = [TokenAuthentication, SessionAuthentication]
     permission_classes = [IsAuthenticated]
     filter_backends = [DjangoFilterBackend]

@@ -1,6 +1,6 @@
-from my_apps.dashboard.models.data import DataModel
-from my_apps.dashboard.models.color import ColorModel
-from my_apps.dashboard.models.hair import HairModel
-from my_apps.dashboard.models.full_data import FullDataModel
+from my_apps.dashboard.models.data import Data
+from my_apps.dashboard.models.color import Color
+from my_apps.dashboard.models.hair import Hair
+from my_apps.dashboard.models.full_data import FullData
 
-__all__ = ['DataModel', 'ColorModel', 'HairModel', 'FullDataModel']
+__all__ = ['Data', 'Color', 'Hair', 'FullData']

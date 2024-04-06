@@ -14,6 +14,8 @@ python manage.py makemigrations
 python manage.py migrate
 python manage.py add_users
 python manage.py add_data
+python manage.py add_notifications
+python manage.py add_invoices
 ```
 <hr>
 

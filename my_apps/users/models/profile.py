@@ -20,7 +20,7 @@ def get_profile_thumb_path(instance, filename):
     return f'profile_thumbs/{instance.user.id}/{new_filename}'
 
 
-class ProfileModel(models.Model):
+class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     proof = models.FileField(upload_to=get_proof_path, null=True)
     profile_pic = models.ImageField(upload_to=get_profile_pic_path, null=True)
