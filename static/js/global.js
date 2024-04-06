@@ -59,3 +59,28 @@ function dispatchSelect(){
     var element = document.getElementById('id_gender');
     element.dispatchEvent(new Event('change'));
 }
+
+// Dont close the dropdown when clicked inside the navbarDropdown
+function dropdownItemStopProp() {
+  document.querySelectorAll('.dropdown-menu').forEach(function (dropdownMenu) {
+    if (dropdownMenu.getAttribute('aria-labelledby') == 'navbarDropdown') {
+      dropdownMenu.addEventListener('click', (event) => {
+        if (event.delegateTarget) event.stopPropagation();
+      })
+    }
+  });
+}
+dropdownItemStopProp()
+
+// Close the current dropdown if the other dropdown is opened
+function onDropdownShow() {
+  var dropdownIds = ['#navbarPdfDropdown', '#navbarBgTaskDropdown'];
+  dropdownIds.forEach((dropdownId) => {
+    $(dropdownId).on('show.bs.dropdown', () => {
+      dropdownIds.forEach((otherDropdownId) => {
+        if (otherDropdownId !== dropdownId) $(otherDropdownId).dropdown('hide')
+      });
+    });
+  });
+}
+onDropdownShow()

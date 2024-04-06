@@ -5,5 +5,5 @@ from django.contrib.auth.decorators import login_required
 app_name = "pdf"
 
 urlpatterns = [
-    path('generate_pdf/', login_required(generate_pdf_view), name='generate_pdf')
+    path('invoice/', login_required(generate_pdf_view), name='invoice')
 ]
