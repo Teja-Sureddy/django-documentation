@@ -200,7 +200,7 @@ class BaseReportLabPlatypus:
         legend.deltay = 25  # space between y-neighbours
         legend.dxTextSpace = 8  # space between text and icon
         legend.fontSize = 10
-        legend.fontName = 'Helvetica-Bold'
+        legend.fontName = 'Helvetica'
         legend.fillColor = colors.grey
         legend.alignment = 'right'  # text on right, icon on left
         legend.strokeWidth = 0
@@ -212,12 +212,19 @@ class BaseReportLabPlatypus:
 
         # label
         label = Label()
-        label.x = 50
+        label.x = 0
         label.y = 275
+        label.width = 500 - 15
         label._text = kwargs.get('heading')
-        label.fontSize = 12
-        label.fillColor = colors.HexColor('#727cf5')
-        label.fontName = 'Helvetica-Bold'
+        label.fontSize = 10
+        label.fillColor = colors.white
+        label.fontName = 'Helvetica'
+        label.boxAnchor = 'w'  # alignment - 'c'(center), 'e'(east), 'w'(west), 'n', 's', 'ne', 'nw', ...
+        label.boxFillColor = colors.HexColor('#727cf5')
+        label.topPadding = 4
+        label.bottomPadding = 4
+        label.leftPadding = 4
+        label.rightPadding = 4
 
         drawing.add(label)
 
@@ -327,7 +334,7 @@ class InvoiceReportLabPlatypus(BaseReportLabPlatypus):
                 (70, 20, 10, 40, 20, 100, 100, 100, 20, 40), (-20, -18, -10, -10, -15, -18, 0, -10, 20, -10)]
         labels = [str(val) for val in range(2015, 2025)]
         legend_labels = ['Electronics', 'Fashion', 'Appliances', 'Grocery']
-        heading = 'Statistics:'
+        heading = 'Statistics'
 
         line_chart = self.get_line_chart(data=data, labels=labels, legend_labels=legend_labels, heading=heading)
         return [line_chart]
