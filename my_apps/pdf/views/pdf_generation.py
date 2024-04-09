@@ -30,7 +30,7 @@ def generate_pdf_view(request):
 def generate_pdf(disposition, offset):
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = f'{disposition}; filename="Invoice.pdf"'
-    pdf = SimpleDocTemplate(response, pagesize=A4, leftMargin=50, rightMargin=50, topMargin=50, bottomMargin=50)
+    pdf = SimpleDocTemplate(response, pagesize=A4, leftMargin=50, rightMargin=50, topMargin=50, bottomMargin=50, title="Invoice")
 
     # get invoice data
     invoices = Invoice.objects.prefetch_related('item_set').all()

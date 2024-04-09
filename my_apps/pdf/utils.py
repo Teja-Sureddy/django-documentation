@@ -6,6 +6,11 @@ from reportlab.lib.utils import ImageReader
 from django.contrib.staticfiles.finders import find
 from my_project.settings import BASE_DIR
 import decimal
+from reportlab.graphics.shapes import Drawing, Rect
+from reportlab.graphics.charts.linecharts import HorizontalLineChart
+from reportlab.graphics.widgets.markers import makeMarker
+from reportlab.graphics.charts.textlabels import Label
+from reportlab.graphics.charts.legends import Legend
 
 
 class BaseReportLabPlatypus:
@@ -116,6 +121,108 @@ class BaseReportLabPlatypus:
 
         return styles
 
+    @staticmethod
+    def get_line_chart(**kwargs):
+        """
+        Arguments:
+
+        data - data points of the graph [[], [], [], ...]
+        labels - x-axis labels
+        legend_labels
+        heading
+        """
+        my_colors = ['#727cf5', '#FF76AD', '#FFCA62', '#6DBAA1', '#ABA9BB', '#474555']
+        data_len = len(kwargs.get('data'))
+        min_val = min(min(row) for row in kwargs.get('data'))
+        max_val = max(max(row) for row in kwargs.get('data'))
+        step = 5 * round(((max_val - min_val) // 6) / 5)
+
+        drawing = Drawing(500, 300)
+        drawing.add(Rect(0, 0, 500 - 15, 300, fillColor=None, strokeColor=None))
+
+        # chart
+        line_chart = HorizontalLineChart()
+        line_chart.x = 30
+        line_chart.y = 30
+        line_chart.width = 360
+        line_chart.height = 220
+        line_chart.fillColor = None  # bg
+        line_chart.strokeWidth = 0
+        line_chart.strokeColor = None  # border
+        line_chart.data = kwargs.get('data')
+
+        line_chart.lineLabels.fontSize = 10
+        line_chart.lines.strokeWidth = 1
+        for i in range(data_len):
+            line_chart.lines[i].symbol = makeMarker('Circle', fillColor=colors.white, strokeWidth=0,
+                                                    strokeColor=colors.HexColor(my_colors[i]))
+            line_chart.lines[i].strokeColor = colors.HexColor(my_colors[i])
+
+        # x-axis
+        line_chart.categoryAxis.categoryNames = kwargs.get('labels')
+        line_chart.categoryAxis.joinAxisMode = 'bottom'  # puts the x-axis to the bottom
+        line_chart.categoryAxis.visibleAxis = True  # x-axis line
+        line_chart.categoryAxis.strokeColor = colors.grey
+        line_chart.categoryAxis.visibleGrid = 0  # x-axis grid
+        line_chart.categoryAxis.gridStrokeColor = colors.grey
+        line_chart.categoryAxis.tickShift = True  # x-axis tick
+        line_chart.categoryAxis.tickStrokeColor = colors.grey
+
+        line_chart.categoryAxis.labels.fillColor = colors.grey
+        line_chart.categoryAxis.labels.dx = 0
+        line_chart.categoryAxis.labels.dy = -10
+
+        # y-axis
+        line_chart.valueAxis.visibleAxis = True  # y-axis line
+        line_chart.valueAxis.strokeColor = colors.grey
+        line_chart.valueAxis.visibleGrid = 0  # y-axis grid
+        line_chart.valueAxis.gridStrokeColor = colors.grey
+        line_chart.valueAxis.tickStrokeColor = colors.grey
+
+        # line_chart.valueAxis.labelTextFormat = '%d%%'
+        line_chart.valueAxis.labels.fillColor = colors.grey
+        line_chart.valueAxis.labels.dx = -10
+        line_chart.valueAxis.labels.dy = 0
+
+        line_chart.valueAxis.valueMin = min_val - (step // 2)
+        line_chart.valueAxis.valueMax = max_val + (step // 2)
+        line_chart.valueAxis.valueStep = step
+
+        drawing.add(line_chart)
+
+        # legend
+        legend = Legend()
+        legend.x = 410
+        legend.y = 200
+        legend.dx = 10  # icon width
+        legend.dy = 10  # icon height
+        legend.deltax = 25  # space between x-neighbours
+        legend.deltay = 25  # space between y-neighbours
+        legend.dxTextSpace = 8  # space between text and icon
+        legend.fontSize = 10
+        legend.fontName = 'Helvetica-Bold'
+        legend.fillColor = colors.grey
+        legend.alignment = 'right'  # text on right, icon on left
+        legend.strokeWidth = 0
+        legend.strokeColor = None
+        legend.columnMaximum = data_len
+        legend.colorNamePairs = [(colors.HexColor(my_colors[i]), val) for i, val in enumerate(kwargs.get('legend_labels'))]
+
+        drawing.add(legend)
+
+        # label
+        label = Label()
+        label.x = 50
+        label.y = 275
+        label._text = kwargs.get('heading')
+        label.fontSize = 12
+        label.fillColor = colors.HexColor('#727cf5')
+        label.fontName = 'Helvetica-Bold'
+
+        drawing.add(label)
+
+        return drawing
+
 
 class InvoiceReportLabPlatypus(BaseReportLabPlatypus):
 
@@ -126,9 +233,10 @@ class InvoiceReportLabPlatypus(BaseReportLabPlatypus):
     def get_pdf_content(self):
         header = self.get_header()
         body = self.get_body()
+        graphs = self.get_graph()
         footer = self.get_footer()
 
-        return header + [Spacer(0, 30)] + body + [Spacer(0, 50)] + footer
+        return header + [Spacer(0, 30)] + body + [Spacer(0, 30)] + graphs + [Spacer(0, 50)] + footer
 
     def get_header(self):
         # logo
@@ -199,7 +307,8 @@ class InvoiceReportLabPlatypus(BaseReportLabPlatypus):
         grand_total = sub_total - discount + tax + charges
         table4_content = [
             ['', self.get_p('Subtotal', alignment=2), self.get_p('${:.2f}'.format(sub_total), alignment=2)],
-            ['', self.get_p('Discount', alignment=2), self.get_p('- ${:.2f}'.format(discount), alignment=2, text_color='#169955')],
+            ['', self.get_p('Discount', alignment=2),
+             self.get_p('- ${:.2f}'.format(discount), alignment=2, text_color='#169955')],
             ['', self.get_p('Tax', alignment=2), self.get_p('${:.2f}'.format(tax), alignment=2)],
             ['', self.get_p('Shipping & Handling', alignment=2), self.get_p('${:.2f}'.format(charges), alignment=2)],
             ['', self.get_p('Grand Total', alignment=2, is_bold=True, text_color='#727cf5'),
@@ -212,6 +321,16 @@ class InvoiceReportLabPlatypus(BaseReportLabPlatypus):
         table4.setStyle(TableStyle(table4_styles))
 
         return [table1, Spacer(0, 30), table2, Spacer(0, 30), table3, table4]
+
+    def get_graph(self):
+        data = [(170, 120, 170, 180, 170, 160, 200, 200, 180, 160), (-50, -50, -50, -50, 170, 180, 190, 200, 200, 100),
+                (70, 20, 10, 40, 20, 100, 100, 100, 20, 40), (-20, -18, -10, -10, -15, -18, 0, -10, 20, -10)]
+        labels = [str(val) for val in range(2015, 2025)]
+        legend_labels = ['Electronics', 'Fashion', 'Appliances', 'Grocery']
+        heading = 'Statistics:'
+
+        line_chart = self.get_line_chart(data=data, labels=labels, legend_labels=legend_labels, heading=heading)
+        return [line_chart]
 
     def get_footer(self):
         content1 = 'Thank you for your order!'
