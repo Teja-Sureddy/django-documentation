@@ -192,12 +192,12 @@ class BaseReportLabPlatypus:
 
         # legend
         legend = Legend()
-        legend.x = 410
+        legend.x = 400
         legend.y = 200
         legend.dx = 10  # icon width
         legend.dy = 10  # icon height
-        legend.deltax = 25  # space between x-neighbours
-        legend.deltay = 25  # space between y-neighbours
+        legend.deltax = 0  # space between x-neighbours
+        legend.deltay = 0  # space between y-neighbours
         legend.dxTextSpace = 8  # space between text and icon
         legend.fontSize = 10
         legend.fontName = 'Helvetica'
@@ -207,7 +207,7 @@ class BaseReportLabPlatypus:
         legend.strokeColor = None
         legend.columnMaximum = data_len
         legend.colorNamePairs = [(colors.HexColor(my_colors[i]), val) for i, val in enumerate(kwargs.get('legend_labels'))]
-
+        legend.yGap = 10
         drawing.add(legend)
 
         # label
@@ -300,7 +300,7 @@ class InvoiceReportLabPlatypus(BaseReportLabPlatypus):
                    self.get_p('${:.2f}'.format(item.price), alignment=2)]
             table3_content.append(row)
 
-        table3 = Table(table3_content, colWidths=[250, 125, 125])
+        table3 = Table(table3_content, colWidths=[320, 80, 100])
         table3_styles = self.get_table_styles(text_color='#ffffff', rowBg=None, padding=6)
         table3_styles += [('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#727cf5')),
                           ('ALIGN', (-1, 0), (-1, 0), 'RIGHT')]

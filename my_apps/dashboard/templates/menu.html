@@ -59,15 +59,21 @@
                                     <ul class="dropdown-menu px-1 py-2 position-absolute" aria-labelledby="navbarPdfDropdown">
                                         <li>
                                             <a class="dropdown-item" role="button" tabindex="0"
-                                               href="{% url 'pdf:invoice' %}" target="_blank">Display</a>
+                                               href="{% url 'pdf:generate' %}" target="_blank">Display</a>
                                         </li>
                                         <li>
                                             <a class="dropdown-item" role="button" tabindex="0"
-                                               href="{% url 'pdf:invoice' %}?download=1" target="_blank">Download</a>
+                                               href="{% url 'pdf:generate' %}?download=1" target="_blank">Download</a>
                                         </li>
                                         <li>
                                             <a class="dropdown-item" role="button" tabindex="0"
-                                               href="{% url 'pdf:invoice' %}?email=1">Email</a>
+                                               href="{% url 'pdf:generate' %}?email=1">Email</a>
+                                        </li>
+
+                                        <li><hr class="dropdown-divider my-1"></li>
+                                        <li>
+                                            <a class="dropdown-item" role="button" tabindex="0"
+                                               href="{% url 'pdf:process' %}" target="_blank">Process</a>
                                         </li>
                                     </ul>
                                 </li>

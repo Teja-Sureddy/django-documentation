@@ -169,6 +169,7 @@ python manage.py createsuperuser
  - [DRF](my_apps/rest/README.md)
  - [WSS](#WSS)
  - [Background task](my_apps/background_task/__init__.py)
+ - [PDF - Generate / Process](my_apps/pdf/__init__.py)
 
 
 ### WSS

@@ -18,3 +18,4 @@ channels==3.0.5  # wss
 django-q==1.3.9  # background task
 asyncio==3.4.3  # simultaneous task
 reportlab==4.1.0  # generating pdf
+PyMuPDF==1.24.1  # extracting, processing, ... pdf
