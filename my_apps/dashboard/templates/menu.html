@@ -44,6 +44,10 @@
                                             <a class="dropdown-item" role="button" tabindex="0" hx-swap="none"
                                                hx-post="{% url 'background:asyncio' %}" hx-trigger="click">Asyncio</a>
                                         </li>
+                                        <li hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+                                            <a class="dropdown-item" role="button" tabindex="0" hx-swap="none"
+                                               hx-post="{% url 'background:multiprocessing' %}" hx-trigger="click">Multiprocessing</a>
+                                        </li>
                                     </ul>
                                 </li>
                             </ul>

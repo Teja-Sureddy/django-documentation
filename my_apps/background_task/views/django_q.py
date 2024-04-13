@@ -20,5 +20,8 @@ class DjangoQView(View):
     The number of simultaneous tasks that can be processed depends on the number of workers configured.
     """
     def post(self, request):
+        """
+        Running a task in the background (can run multiple simultaneously).
+        """
         async_task(my_background_task, 1, 2, x=3)
         return JsonResponse({'success': True}, status=200)

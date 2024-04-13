@@ -22,11 +22,15 @@ async def my_async_function2(*args, **kwargs):
 
 class AsyncioView(View):
     """
+    asyncio
+
     This doesn't run the task in the background.
-    But, We can run multiple tasks simultaneously.
     """
     @async_to_sync
     async def post(self, request):
+        """
+        Running multiple tasks simultaneously.
+        """
         loop = asyncio.get_event_loop()
         task1 = loop.create_task(my_async_function1(1, 2, x=3))
         task2 = loop.create_task(my_async_function2(1, 2, x=3))
