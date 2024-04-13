@@ -222,7 +222,7 @@ ASGI_APPLICATION = 'my_project.asgi.application'
 # channels redis
 CHANNEL_LAYERS = {
     'default': {
-        # without broker
+        # without broker - in memory
         'BACKEND': 'channels.layers.InMemoryChannelLayer',
 
         # with redis broker
@@ -244,7 +244,7 @@ Q_CLUSTER = {
     'orm': 'default',
 }
 
-# logging
+# logging - inbuilt
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -278,4 +278,21 @@ LOGGING = {
             'propagate': True,
         },
     },
+}
+
+# cache - inbuilt
+CACHES = {
+    'default': {
+        # without redis - in memory
+        # "BACKEND": "django.core.cache.backends.db.DatabaseCache", # db caching
+        # 'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        # 'TIMEOUT': 3600,  # 1 hour
+        # 'OPTIONS': {
+        #     'MAX_ENTRIES': 1000
+        # },
+
+        # with redis
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379",
+    }
 }

@@ -6,6 +6,8 @@ from my_apps.dashboard.utils import FullDataTable, FullDataFilter
 from django.contrib import messages
 from django.http import JsonResponse
 from my_apps.users.utils import is_authorized
+from django.views.decorators.cache import cache_page
+from django.utils.decorators import method_decorator
 
 
 # This is similar to ListView
@@ -19,6 +21,10 @@ class DataView(SingleTableView, FilterView):
     def __init__(self, *args, **kwargs):
         self.object_list = kwargs.pop('queryset', None)
         super().__init__(*args, **kwargs)
+
+    @method_decorator(cache_page(60 * 15))  # 15 minutes
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
 
     # # Custom filtering
     # def get_queryset(self):
