@@ -72,7 +72,7 @@ class SecurityHeadersMiddleware:
         response["X-XSS-Protection"] = "1; mode=block"
 
         # It controls how much referrer information should be included with requests.
-        response["Referrer-Policy"] = "no-referrer"
+        response["Referrer-Policy"] = "same-origin"
 
         # Web developers can explicitly declare what functionality can and cannot be used on a website.
         response["Feature-Policy"] = (
