@@ -28,6 +28,7 @@ python manage.py add_invoices
 - [Configure python interpreter](#configure-python-interpreter)
 - [Postgres database setup](#postgres-database-setup)
 - [Run the migrations](#run-the-migrations)
+- [Docker](#docker)
 
 
 ## Installation
@@ -145,6 +146,35 @@ python manage.py shell
 python manage.py createsuperuser
 ```
 
+
+
+## Docker
+
+ - Download and install [Docker Desktop](https://www.docker.com/products/docker-desktop/).
+ - Create `Dockerfile`, `.dockerignore` and `docker-compose.yml` files.
+ - To build and run `docker-compose up --build`.
+ - To manually run a command `docker-compose run <service_name> python manage.py <cmd>`
+   Ex: `docker-compose run django python manage.py add_data`
+
+You can manage things in docker desktop or by below commands,
+
+```
+docker-compose build
+docker-compose up -d  # creates and starts containers
+docker-compose down  # stop and remove containers
+docker-compose start, stop, restart, pause, unpause, kill, logs
+
+For a particular service,
+docker-compose start <service_name>
+
+docker-compose exec <service> <command>  # Execute a command in a running service container
+docker-compose run <service> <command>  # Run a one-off command in a new container
+
+docker rm -f $(docker ps -aq)  # Delete all containers
+docker rmi -f $(docker images -aq)  # Delete all images
+docker-compose rm -f <service_name>  # Delete a particular container
+docker rmi <image_name_or_id>  # Delete a particular image
+```
 
 ---
 ## Features
