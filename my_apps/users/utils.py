@@ -9,7 +9,7 @@ from my_project.settings import MEDIA_URL
 
 
 def common_as_div(self):
-    html = ''
+    html = ""
     for field in self:
         if isinstance(field.field, forms.BooleanField):
             html += f"""
@@ -36,10 +36,10 @@ def common_as_div(self):
 
     errors = '<div class="mb-3 fs-9">'
     for field, error in self.errors.items():
-        errors += f'{error}' if field == '__all__' else ''
-    errors += '</div>'
+        errors += f"{error}" if field == "__all__" else ""
+    errors += "</div>"
 
-    html += errors if self.errors else ''
+    html += errors if self.errors else ""
     return html
 
 
@@ -54,16 +54,27 @@ class CustomSocialAccountAdapter(DefaultSocialAccountAdapter):
 
 
 def is_authorized(groups=[], permissions=[]):
+    """
+    You can get all user permissions by,
+
+    permissions = user.user_permissions.values_list('codename', flat=True)
+    group_permissions = user.groups.valves_list("permissions__codename', flat=True)
+    """
+
     def decorator(view_func):
         def wrapper(*args, **kwargs):
-            request = args[0].request if hasattr(args[0], 'request') else args[0]
-            user = getattr(request, 'user', None)
+            request = args[0].request if hasattr(args[0], "request") else args[0]
+            user = getattr(request, "user", None)
 
             user_group_permissions = Permission.objects.filter(group__user=user)
-            group_filter = any(query_set.codename in groups for query_set in user_group_permissions)
+            group_filter = any(
+                query_set.codename in groups for query_set in user_group_permissions
+            )
 
             user_permissions = Permission.objects.filter(user=user)
-            permission_filter = any(query_set.codename in permissions for query_set in user_permissions)
+            permission_filter = any(
+                query_set.codename in permissions for query_set in user_permissions
+            )
 
             if group_filter or permission_filter:
                 return view_func(*args, **kwargs)
