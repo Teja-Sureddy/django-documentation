@@ -17,6 +17,10 @@ channels==3.0.5  # wss
 # channels-redis==3.4.1  # wss
 django-q==1.3.9  # background task
 asyncio==3.4.3  # simultaneous task
+celery==5.4.0  # background task
+gevent==24.2.1  # needed for celery concurrency
+django-celery-results==2.5.1  # to store celery task results
+redis==3.5.3  # needed by django-q and celery
 reportlab==4.1.0  # generating pdf
 PyMuPDF==1.24.1  # extracting, processing, ... pdf
 pre-commit==3.7.0  # run some commands before committing

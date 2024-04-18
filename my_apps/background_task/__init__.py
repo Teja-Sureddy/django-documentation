@@ -10,4 +10,8 @@ Multiple tasks (concurrent), async I/O - reading files, db & network calls.
 
 multiprocess:
 Background tasks (concurrent), Multiple tasks (concurrent), shared memory, suitable for CPU-bound tasks.
+
+celery:
+Background tasks (concurrent or single, depends on pool/worker), Multiple tasks (concurrent), Scheduling tasks,
+Task prioritization, Monitoring.
 """

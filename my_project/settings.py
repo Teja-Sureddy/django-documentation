@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     "notifications",
     "channels",
     "django_q",
+    "django_celery_results",
     # custom
     "my_apps.dashboard",
     "my_apps.users",
@@ -307,3 +308,7 @@ CSP_DEFAULT_SRC = (
     "fonts.googleapis.com",
     "fonts.gstatic.com",
 )
+
+# celery
+CELERY_BROKER_URL = env("REDIS_LOCATION")
+CELERY_RESULT_BACKEND = "django-db"
