@@ -5,10 +5,9 @@ from my_apps.background_task.tasks import my_background_task
 
 class CeleryView(View):
     """
-    celery
+    Configuration:
 
-    Configure celery in django.
-    Install redis in os and start redis-server by `sudo service redis-server start`.
+    Install redis on os and start redis-server by `sudo service redis-server start`.
 
     It runs the tasks in celery thread, `celery -A my_project worker -l info -P gevent` must be running.
     If the celery is down and then restarted, The pending tasks gets triggered automatically (django-celery-results).
@@ -20,7 +19,7 @@ class CeleryView(View):
 
     def post(self, request):
         """
-        Running a task in the background (can run multiple simultaneously).
+        Running a task in the background.
         """
         my_background_task.delay(1, 2, x=3)
         return JsonResponse({"success": True}, status=200)

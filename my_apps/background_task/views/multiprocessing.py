@@ -5,7 +5,7 @@ import multiprocessing
 
 
 def my_function1(*args, **kwargs):
-    print('function 1', args, kwargs)
+    print("function 1", args, kwargs)
     for i in range(1, 6):
         print(i)
         time.sleep(1)
@@ -13,7 +13,7 @@ def my_function1(*args, **kwargs):
 
 
 def my_function2(*args, **kwargs):
-    print('function 2', args, kwargs)
+    print("function 2", args, kwargs)
     for i in range(1, 6):
         print(i)
         time.sleep(1)
@@ -22,10 +22,9 @@ def my_function2(*args, **kwargs):
 
 class MultiProcessingView(View):
     """
-    Multiprocess - Inbuilt
-
-    Need to comment django_q imports.
+    To run multiprocessing, Need to comment django_q imports.
     """
+
     def post(self, request):
         background_def()
         same_def_parallel()
@@ -33,7 +32,7 @@ class MultiProcessingView(View):
         InterProcessQueue().start()
         SharedMemory().start()
 
-        return JsonResponse({'success': True}, status=200)
+        return JsonResponse({"success": True}, status=200)
 
 
 # processors
@@ -41,8 +40,12 @@ def background_def():
     """
     Running multiple tasks simultaneously in the background.
     """
-    process1 = multiprocessing.Process(target=my_function1, args=(1, 2), kwargs={'x': 3})
-    process2 = multiprocessing.Process(target=my_function2, args=(1, 2), kwargs={'x': 3})
+    process1 = multiprocessing.Process(
+        target=my_function1, args=(1, 2), kwargs={"x": 3}
+    )
+    process2 = multiprocessing.Process(
+        target=my_function2, args=(1, 2), kwargs={"x": 3}
+    )
 
     process1.start()
     process2.start()
@@ -57,11 +60,13 @@ def same_def_parallel():
     Runs same function simultaneously in the foreground.
     """
     pool = multiprocessing.Pool()
-    results = pool.map(my_function1, [(1, 2, {'x': 3}), (4, 5, {'x': 6})])  # triggers 2 times
+    results = pool.map(
+        my_function1, [(1, 2, {"x": 3}), (4, 5, {"x": 6})]
+    )  # triggers 2 times
 
     pool.close()
     pool.join()  # what ever logic written after join will run once the multiprocess is done.
-    print('same function in parallel: ', results)
+    print("same function in parallel: ", results)
     return results
 
 
@@ -70,15 +75,15 @@ def different_def_parallel():
     Runs different functions simultaneously in the foreground.
     """
     pool = multiprocessing.Pool()
-    results1 = pool.apply_async(my_function1, args=(1, 2), kwds={'x': 3})
-    results2 = pool.apply_async(my_function2, args=(1, 2), kwds={'x': 3})
+    results1 = pool.apply_async(my_function1, args=(1, 2), kwds={"x": 3})
+    results2 = pool.apply_async(my_function2, args=(1, 2), kwds={"x": 3})
 
     results1 = results1.get()
     results2 = results2.get()
 
     pool.close()
     pool.join()
-    print('different function in parallel: ', results1, results2)
+    print("different function in parallel: ", results1, results2)
     return results1, results2
 
 
@@ -92,7 +97,9 @@ class InterProcessQueue:
         input_queue = multiprocessing.Queue()
         output_queue = multiprocessing.Queue()
         process1 = multiprocessing.Process(target=self.q_function1, args=(input_queue,))
-        process2 = multiprocessing.Process(target=self.q_function2, args=(input_queue, output_queue))
+        process2 = multiprocessing.Process(
+            target=self.q_function2, args=(input_queue, output_queue)
+        )
 
         process1.start()
         process2.start()
@@ -112,7 +119,7 @@ class InterProcessQueue:
     @staticmethod
     def q_function1(q):
         for i in range(3):
-            print('sender: ', i)
+            print("sender: ", i)
             q.put(i)
             time.sleep(1)
 
@@ -122,7 +129,7 @@ class InterProcessQueue:
             i = q_in.get()
             if i is None:
                 break
-            print('receiver: ', i)
+            print("receiver: ", i)
             result = my_function1(i)
             q_out.put(result)
 
@@ -133,10 +140,14 @@ class SharedMemory:
     """
 
     def start(self):
-        shared_value = multiprocessing.Value('i', 0)  # 'i' for int, 'c' for char, ...
+        shared_value = multiprocessing.Value("i", 0)  # 'i' for int, 'c' for char, ...
         shared_list = multiprocessing.Manager().list()
-        processes1 = multiprocessing.Process(target=self.update_shared_value, args=(shared_value, shared_list))
-        processes2 = multiprocessing.Process(target=self.update_shared_value, args=(shared_value, shared_list))
+        processes1 = multiprocessing.Process(
+            target=self.update_shared_value, args=(shared_value, shared_list)
+        )
+        processes2 = multiprocessing.Process(
+            target=self.update_shared_value, args=(shared_value, shared_list)
+        )
 
         processes1.start()
         processes2.start()

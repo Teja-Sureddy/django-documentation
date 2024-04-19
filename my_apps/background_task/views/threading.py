@@ -21,13 +21,10 @@ class MyBackgroundThreadingTask(Thread):
 
 
 class ThreadingView(View):
-    """
-    Threading - Inbuilt
-    """
     def post(self, request):
         """
-        Running a task in the background (can run multiple simultaneously).
+        Running a task in the background.
         """
         task_thread = MyBackgroundThreadingTask(1, 2, x=3)
         task_thread.start()
-        return JsonResponse({'success': True}, status=200)
+        return JsonResponse({"success": True}, status=200)

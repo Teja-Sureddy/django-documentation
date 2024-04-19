@@ -13,15 +13,16 @@ def my_background_task(*args, **kwargs):
 
 class DjangoQView(View):
     """
-    django-q
+    Configuration:
 
     It runs the tasks in qcluster, `python manage.py qcluster` must be running.
     If the qcluster is down and then restarted, The pending tasks gets triggered automatically (stored in db).
     The number of simultaneous tasks that can be processed depends on the number of workers configured.
     """
+
     def post(self, request):
         """
-        Running a task in the background (can run multiple simultaneously).
+        Running a task in the background.
         """
         async_task(my_background_task, 1, 2, x=3)
-        return JsonResponse({'success': True}, status=200)
+        return JsonResponse({"success": True}, status=200)

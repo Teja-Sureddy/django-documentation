@@ -199,7 +199,7 @@ docker rmi <image_name_or_id>  # Delete a particular image
  - [File Upload](my_apps/users/views/profile.py)
  - [DRF](my_apps/rest/README.md)
  - [WSS](#WSS)
- - [Background task](my_apps/background_task/__init__.py)
+ - [Background task](my_apps/background_task/README.md)
  - [PDF - Generate / Process](my_apps/pdf/__init__.py)
 
 
