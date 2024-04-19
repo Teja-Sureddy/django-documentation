@@ -24,7 +24,7 @@
 
  - Scheduled tasks (CRON, Interval, ...).
  - Good for I/O-bound tasks but not for CPU-bound tasks due to single-threaded nature.
- - Can add, modify, and remove scheduled tasks dynamically (stores in db).
+ - Has management - Can add, modify, and remove scheduled tasks dynamically.
  - It supports both sync and async job execution.
 
 ### Celery
@@ -32,7 +32,7 @@
  - Concurrent task execution (background & foreground).
  - Can access and modify shared data between tasks using redis, rabbitmq or database.
  - Good for both I/O-bound and CPU-bound tasks.
- - Can have Scheduled tasks or CRON with django-celery-beat.
+ - Can have Scheduled tasks (CRON) with management using django-celery-beat.
  - Has monitoring, management, retry mechanism and prioritization.
  - Can utilize workers.
 
@@ -53,6 +53,7 @@
 
  - Scheduled tasks (CRON).
  - Good for I/O-bound tasks.
+ - Has management.
 
 ### Django-Q
 
