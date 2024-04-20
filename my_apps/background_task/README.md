@@ -3,14 +3,14 @@
 ---
 ## Inbuilt
 
-### Threading
+### threading
 
  - Concurrent task execution (background & foreground).
  - Can access and modify shared data between tasks.
  - Good for I/O-bound tasks but not for CPU-bound tasks due to GIL.
  - It shares common memory space.
 
-### Multiprocessing
+### multiprocessing
 
  - Concurrent task execution (background & foreground).
  - Can access and modify shared data between tasks using shared memory, queues or pipes.
@@ -27,16 +27,16 @@
  - Has management - Can add, modify, and remove scheduled tasks dynamically.
  - It supports both sync and async job execution.
 
-### Celery
+### celery
 
  - Concurrent task execution (background & foreground).
- - Can access and modify shared data between tasks using redis, rabbitmq or database.
+ - Can access and modify shared data between tasks using `redis`, rabbitmq, cache or database.
  - Good for both I/O-bound and CPU-bound tasks.
- - Can have Scheduled tasks (CRON) with management using django-celery-beat.
- - Has monitoring, management, retry mechanism and prioritization.
- - Can utilize workers.
+ - Can have Scheduled tasks (CRON) statically using celery itself, dynamically using `django-celery-beat`.
+ - Has monitoring and management using `flower`, retry mechanism and prioritization.
+ - Can utilize all workers.
 
-### Asyncio
+### asyncio
 
  - Concurrent task execution (background & foreground).
  - Good for I/O-bound tasks.
@@ -47,7 +47,8 @@
  - Can access and modify shared data between tasks using redis.
  - Good for I/O-bound tasks.
  - Has monitoring and retry mechanism.
- - Can utilize workers.
+ - Can utilize all workers.
+ - `celery -A my_project worker -l info -P gevent` and `celery -A my_project beat -l info` must be running.
 
 ### django-crontab
 
@@ -55,11 +56,12 @@
  - Good for I/O-bound tasks.
  - Has management.
 
-### Django-Q
+### django-q
 
  - Concurrent task execution (background & foreground).
- - Can access and modify shared data between tasks using database.
+ - Can access and modify shared data between tasks using cache or database.
  - Good for both I/O-bound and CPU-bound tasks.
- - Scheduled tasks (CRON).
- - Has monitoring, management and prioritization.
- - Can utilize workers.
+ - Scheduled tasks (CRON) statically/dynamically using django-q.
+ - Has monitoring and management in django-q itself.
+ - Can utilize all workers.
+ - `python manage.py qcluster` must be running.

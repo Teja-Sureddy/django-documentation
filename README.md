@@ -162,7 +162,7 @@ You can manage things in docker desktop or by below commands,
 docker-compose build
 docker-compose up -d  # creates and starts containers
 docker-compose down  # stop and remove containers
-docker-compose start, stop, restart, pause, unpause, kill, logs
+docker-compose start, stop, restart, pause, unpause, kill, logs -f
 
 For a particular service,
 docker-compose start <service_name>

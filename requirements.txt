@@ -20,6 +20,7 @@ asyncio==3.4.3  # simultaneous task
 celery==5.4.0  # background task
 gevent==24.2.1  # needed for celery concurrency
 django-celery-results==2.5.1  # to store celery task results
+django-celery-beat==2.6.0  # to run cron dynamically
 redis==3.5.3  # needed by django-q and celery
 reportlab==4.1.0  # generating pdf
 PyMuPDF==1.24.1  # extracting, processing, ... pdf

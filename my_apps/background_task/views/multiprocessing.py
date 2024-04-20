@@ -78,6 +78,7 @@ def different_def_parallel():
     results1 = pool.apply_async(my_function1, args=(1, 2), kwds={"x": 3})
     results2 = pool.apply_async(my_function2, args=(1, 2), kwds={"x": 3})
 
+    # comment the below to run this in the background.
     results1 = results1.get()
     results2 = results2.get()
 

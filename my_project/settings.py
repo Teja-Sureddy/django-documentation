@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import environ
 import os
+from celery.schedules import crontab
 
 env = environ.Env(DEBUG=(bool, False))
 
@@ -60,6 +61,7 @@ INSTALLED_APPS = [
     "channels",
     "django_q",
     "django_celery_results",
+    "django_celery_beat",
     # custom
     "my_apps.dashboard",
     "my_apps.users",
@@ -312,3 +314,15 @@ CSP_DEFAULT_SRC = (
 # celery
 CELERY_BROKER_URL = env("REDIS_LOCATION")
 CELERY_RESULT_BACKEND = "django-db"
+# static cron
+CELERY_BEAT_SCHEDULE = {
+    "my-bg-task": {
+        "task": "my_apps.background_task.tasks.my_background_task",
+        "schedule": crontab(minute="*"),  # every minute
+        "args": [1, 2],
+        "kwargs": {"x": 3},
+    },
+}
+
+# django-celery-beat, dynamic cron
+CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
