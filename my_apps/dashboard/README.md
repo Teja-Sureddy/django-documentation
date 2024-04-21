@@ -1,5 +1,10 @@
 # SQL to ORM
 
+```
+get(pk=pk)          # use this if you expect only one object
+first(), last()     # will get the first/last object
+```
+
 queryset to dict,
 ```
 queryset[0].__dict__
@@ -37,6 +42,22 @@ queryset = Data.objects.filter(
 ).order_by('-age', 'id')
 ```
 Here `queryset` consist of list of models.
+
+
+---
+## aggregation
+SQL:
+```
+SELECT COUNT(*), AVG(age) avg_age FROM dashboard_data
+WHERE age > 18 AND GENDER = 'M';
+```
+
+ORM:
+```
+queryset = Data.objects.filter(
+    age__gt=18, gender='M'
+).aggregate(count=Count('*'), avg_age=Avg('age'))
+```
 
 
 ---
