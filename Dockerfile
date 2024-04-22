@@ -13,3 +13,13 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the rest of the application code
 COPY . /app/
+
+#ENV HOME=/home/ubuntu
+#ENV APP_HOME=/home/ubuntu/django-documentation
+#RUN mkdir $APP_HOME
+#RUN mkdir $APP_HOME/statc
+#WORKDIR $APP_HOME
+
+RUN mkdir /app/logs
+RUN touch /app/logs/django.log
+
