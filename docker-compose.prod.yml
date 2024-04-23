@@ -1,0 +1,42 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres
+    restart: always
+    env_file:
+      - .env
+
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+    restart: always
+
+  django:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: >
+      sh -c "python manage.py migrate && gunicorn my_project.wsgi:application --bind 0.0.0.0:8000 && celery -A my_project worker -l info -P gevent && celery -A my_project beat -l info"
+    expose:
+      - 8000
+    volumes:
+      - static_volume:/app/static/
+    env_file:
+      - .env
+    depends_on:
+      - postgres
+      - redis
+
+  nginx:
+    build: ./nginx
+    ports:
+      - 80:80
+    volumes:
+      - static_volume:/app/static/
+    depends_on:
+      - django
+
+volumes:
+  static_volume:

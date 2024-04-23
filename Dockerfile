@@ -13,3 +13,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the rest of the application code
 COPY . /app/
+
+RUN mkdir /app/logs
+RUN touch /app/logs/django.log

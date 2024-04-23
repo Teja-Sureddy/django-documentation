@@ -4,3 +4,4 @@ __pycache__
 assets/*
 !assets/public/
 logs
+celerybeat-schedule

@@ -29,3 +29,5 @@ ruff==0.3.5  # linter and code formatter
 coverage==7.4.4  # code coverage testing
 djlint==1.34.1  # html template linter and formatter
 django-csp==3.8  # security - which resources can be loaded on a web page
+gunicorn==21.2.0  # for deployment
+psycopg2-binary==2.9.6  # for postgres
