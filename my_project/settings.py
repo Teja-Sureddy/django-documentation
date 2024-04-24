@@ -30,10 +30,10 @@ SECRET_KEY = "django-insecure-fwbxeelgwxbx*+xp=qk7q07n7d#yaaafqrc1$!l@4lbhs+yyz-
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool("DEBUG", False)
-
+print(env.list("ALLOWED_HOSTS"), env.list("TRUSTED_ORIGINS"))
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
 
-CSRF_TRUSTED_ORIGINS = env.list("ALLOWED_HOSTS")
+CSRF_TRUSTED_ORIGINS = env.list("TRUSTED_ORIGINS")
 
 INTERNAL_IPS = ["127.0.0.1"]
 
