@@ -174,6 +174,10 @@ docker rm -f $(docker ps -aq)  # Delete all containers
 docker rmi -f $(docker images -aq)  # Delete all images
 docker-compose rm -f <service_name>  # Delete a particular container
 docker rmi <image_name_or_id>  # Delete a particular image
+
+docker volume ls  # List all volumes
+docker volume rm <volumn_name>  # Delete particular volume
+docker volume prune   # Delete all volume
 ```
 
 ---

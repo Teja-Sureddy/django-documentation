@@ -23,6 +23,7 @@ services:
       - 8000
     volumes:
       - static_volume:/app/static/
+      - ./assets:/app/assets
     env_file:
       - .env
     depends_on:
@@ -33,6 +34,7 @@ services:
     build: ./nginx
     ports:
       - 80:80
+      - 443:443
     volumes:
       - static_volume:/app/static/
       - ./data/certbot/conf:/etc/letsencrypt
