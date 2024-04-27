@@ -31,7 +31,7 @@ services:
       - redis
 
   nginx:
-    build: ./nginx
+    build: ./infrastructure/setup/nginx
     ports:
       - 80:80
       - 443:443
