@@ -37,4 +37,4 @@ docker-compose -f docker-compose.prod.yml up -d --build
 
 
 # RENEW CERTBOT
-docker-compose run --rm certbot renew
+docker-compose -f docker-compose.prod.yml run --rm certbot renew

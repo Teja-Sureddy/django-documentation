@@ -170,10 +170,13 @@ docker-compose start <service_name>
 docker-compose exec <service> <command>  # Execute a command in a running service container
 docker-compose run <service> <command>  # Run a one-off command in a new container
 
-docker rm -f $(docker ps -aq)  # Delete all containers
+docker images  # List all images
 docker rmi -f $(docker images -aq)  # Delete all images
-docker-compose rm -f <service_name>  # Delete a particular container
 docker rmi <image_name_or_id>  # Delete a particular image
+
+docker ps -a  # List all containers
+docker rm -f $(docker ps -aq)  # Delete all containers
+docker-compose rm -f <service_name>  # Delete a particular container
 
 docker volume ls  # List all volumes
 docker volume rm <volumn_name>  # Delete particular volume

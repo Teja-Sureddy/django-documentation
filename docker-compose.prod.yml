@@ -18,7 +18,7 @@ services:
       context: .
       dockerfile: Dockerfile
     command: >
-      sh -c "python manage.py migrate & gunicorn my_project.wsgi:application --bind 0.0.0.0:8000 & celery -A my_project worker -l info -P gevent & celery -A my_project beat -l info"
+      sh -c "python manage.py migrate && gunicorn my_project.asgi:application --bind 0.0.0.0:8000 & celery -A my_project worker -l info -P gevent & celery -A my_project beat -l info"
     expose:
       - 8000
     volumes:
