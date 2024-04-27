@@ -4,6 +4,6 @@ phases:
   build:
     commands:
       - echo "Connecting to EC2 instance"
-      - chmod 400 key.pem
-      - ssh -v -o "StrictHostKeyChecking no" -i key.pem ubuntu@ec2-13-201-28-33.ap-south-1.compute.amazonaws.com 'bash -s' < deploy.sh
+      - chmod 400 infrastructure/build/key.pem
+      - ssh -v -o "StrictHostKeyChecking no" -i infrastructure/build/key.pem ubuntu@ec2-13-201-28-33.ap-south-1.compute.amazonaws.com 'bash -s' < deploy.sh
       - echo "Done."
