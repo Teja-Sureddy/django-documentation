@@ -8,7 +8,7 @@ phases:
       - ssh -v -o "StrictHostKeyChecking no" -i ec2.pem ubuntu@ec2-13-201-28-33.ap-south-1.compute.amazonaws.com
       - echo "Navigating to project directory"
       - sudo su
-      - cd /django-documentation
+      - cd django-documentation
       - echo "Pulling latest changes from Git"
       - git pull
       - echo "Building Docker image"
