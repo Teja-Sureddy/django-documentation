@@ -147,6 +147,7 @@ a:focus {
 .page-link{
     color: #727cf5;
     text-transform: capitalize !important;
+    white-space: nowrap;
 }
 
 .page-item.active .page-link{
@@ -493,4 +494,9 @@ input[type="checkbox"] {
     top: -4px;
     left: 20px;
     font-size: 0.75rem;
+}
+
+@media only screen and (max-width: 600px) {
+    .pagination {
+    }
 }

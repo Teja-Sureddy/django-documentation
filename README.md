@@ -244,3 +244,4 @@ pre-commit install
 ## Infrastructure
 
  - [Build](infrastructure/build/README.md)
+ - [Setup](infrastructure/setup/setup.sh)
