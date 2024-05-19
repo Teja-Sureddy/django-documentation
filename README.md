@@ -1,24 +1,54 @@
 # Django Documentation
 
-|                    |            |
-|--------------------|------------|
-| **OS**             | Windows    |
-| **DB Name**        | my_db      |
-| **Project Name**   | my_project |
-| **Apps Directory** | my_apps    |
+You will find almost everything about django here, along with the usage of several popular packages, deployment, ...
 
 
-## Setup
+## Table of Contents
+
+ - [Local Initial Setup](#local-initial-setup)
+ - [Setup from Scratch](#setup-from-scratch)
+ - [Docker Setup](#docker-setup)
+ - [Infrastructure Setup & Build](#infrastructure-setup--build)
+ - [Django Features](#django-features)
+
+
+
+---
+# Local Initial Setup
+
+## With Docker
+
+Install Docker desktop and run,
+
 ```
-python manage.py makemigrations
+docker-compose up --build
+docker-compose exec django python manage.py add_users
+docker-compose exec django python manage.py add_data
+docker-compose exec django python manage.py add_notifications
+docker-compose exec django python manage.py add_invoices
+```
+
+
+## Without Docker
+
+Setup python virtual environment and run,
+
+```
+pip install -r requirements.txt
+```
+
+```
 python manage.py migrate
 python manage.py add_users
 python manage.py add_data
 python manage.py add_notifications
 python manage.py add_invoices
 ```
-<hr>
 
+
+
+---
+# Setup from Scratch
 
 ## Table of Contents
 
@@ -28,7 +58,7 @@ python manage.py add_invoices
 - [Configure python interpreter](#configure-python-interpreter)
 - [Postgres database setup](#postgres-database-setup)
 - [Run the migrations](#run-the-migrations)
-- [Docker](#docker)
+- [Other Commands](#other-commands)
 
 
 ## Installation
@@ -148,13 +178,13 @@ python manage.py createsuperuser
 
 
 
-## Docker
+---
+# Docker Setup
 
  - Download and install [Docker Desktop](https://www.docker.com/products/docker-desktop/).
  - Create `Dockerfile`, `.dockerignore` and `docker-compose.yml` files.
  - To build and run `docker-compose up --build`.
- - To manually run a command `docker-compose run <service_name> python manage.py <cmd>`
-   Ex: `docker-compose run django python manage.py add_data`
+ - To manually run a command `docker-compose exec <service_name> python manage.py <cmd>`
 
 You can manage things in docker desktop or by below commands,
 
@@ -180,16 +210,24 @@ docker volume rm <volumn_name>  # Delete particular volume
 docker volume prune   # Delete all volume
 ```
 
+There are two commands: `docker-compose` (which needs separate installation) and `docker compose` (which comes with the Docker CLI). They both serve the same purpose.
+
+
+
 ---
-## Features
-### Views
- - Function-Based View
- - [Class-Based View](my_apps/users/views/profile.py)
- - [Class-Based ListView](my_apps/dashboard/views/data.py)
- - Class-Based TemplateView
+# Infrastructure Setup & Build
+
+ - [Build](infrastructure/build/README.md)
+ - [One-Time Setup](infrastructure/setup/setup.sh)
 
 
-### Table of Contents
+
+---
+# Django Features
+
+## Table of Contents
+
+ - [Views](#views)
  - [Middleware](my_apps/middleware.py)
  - [Adapter](my_apps/adapter.py)
  - [Backend](my_apps/backend.py)
@@ -208,14 +246,18 @@ docker volume prune   # Delete all volume
  - [PDF - Generate / Process](my_apps/pdf/__init__.py)
 
 
+### Views
+
+`Function-Based View`, [Class-Based View](my_apps/users/views/profile.py), [Class-Based ListView](my_apps/dashboard/views/data.py) and `Class-Based TemplateView`.
+
+
 ### WSS
 
  - Install `channels`(v3) and configure [asgi](my_project/asgi.py) and [settings](my_project/settings.py) files.
  - Follow [consumer](my_apps/notification/consumers.py) and [js](static/js/notification.js).
 
-With Broker like redis:
+With Broker like redis, additionally:
 
- - Follow above.
  - Install `channels-redis`(v3) in the project.
  - Install `redis` on windows by following https://developer.redis.com/create/windows/.
  - In wsl, run `sudo service redis-server start`.
@@ -238,10 +280,3 @@ logger.critical('This is a critical message')
 ```
 pre-commit install
 ```
-
----
-
-## Infrastructure
-
- - [Build](infrastructure/build/README.md)
- - [Setup](infrastructure/setup/setup.sh)
