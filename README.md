@@ -164,17 +164,24 @@ python manage.py migrate <app_name> zero
 
 ## Other Commands
 
-```
-# To see what SQL statements that migration would execute:
-python manage.py sqlmigrate <app_name> <migration_name>
-
-# To list all models based on your database
-python manage.py inspectdb
-
-python manage.py shell
-
-python manage.py createsuperuser
-```
+| Command                                                   | Description                                                            |
+|-----------------------------------------------------------|------------------------------------------------------------------------|
+| `python manage.py createsuperuser`                        | Creates a superuser for the admin interface.                           |
+| `python manage.py shell`                                  | Opens an interactive Python shell with Django settings loaded.         |
+| `python manage.py sqlmigrate <app_name> <migration_name>` | Shows the SQL statements for a migration.                              |
+| `python manage.py inspectdb`                              | Generates model code by inspecting the database.                       |
+| `python manage.py collectstatic`                          | Collects static files into `STATIC_ROOT` for production use.           |
+| `python manage.py check`                                  | Checks the entire Django project for potential issues.                 |
+| `python manage.py test`                                   | Runs the test suite for the project.                                   |
+| `python manage.py flush`                                  | Deletes all data in the database and reloads initial data.             |
+| `python manage.py loaddata <fixture>`                     | Loads data from fixture files into the database.                       |
+| `python manage.py dumpdata <app_name>`                    | Outputs data from the database as a fixture (e.g., JSON, XML).         |
+| `python manage.py showmigrations`                         | Lists all migrations and their status.                                 |
+| `python manage.py dbshell`                                | Opens the database shell.                                              |
+| `python manage.py diffsettings`                           | Displays differences between the current settings and Django defaults. |
+| `python manage.py sendtestemail`                          | Sends a test email to ensure email settings are correct.               |
+| `python manage.py changepassword <username>`              | Changes the password for the specified user.                           |
+| `python manage.py clearsessions`                          | Removes expired sessions from the database.                            |
 
 
 
